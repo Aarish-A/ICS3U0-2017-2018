@@ -1,77 +1,68 @@
-
-
-
-
-
-
-
-/*
- * This program assumes that a positive velocity indicates downward motion, whereas 
- * a negative velocity indicates an upward motion
+/* Aarish Adeel
+ * Assignment 1 — ICS3UO
+ * October 4 - , 2017
  */
 
-
-/*
-float yPos = 100;
-float xPos = 150;
-
-float yVel = 0;
-float yAccel = 0.09087;
-boolean posVel = false;
-
-float size = 25;
+PVector pos, vel, accel; //Initialize PVectors for the ball position, velocity, and acceleration
+boolean ballVelRising;
+float size;
 
 void setup()
 {
   size(300, 1000);
+  pos = new PVector (150, 100);
+  vel = new PVector (0, 0);
+  accel = new PVector (0, 0.09087);
+  ballVelRising = false;
+  size = 25;
 }
 
 void draw()
 {
   drawSetup();
   ballFalling();
-  ballRising();
+  ballVelRising();
   printValues();
 }
 
 void ballFalling()
 {
-  if (posVel)
+  if (!ballVelRising) //Ball is falling when the velocity is negative
   {
     updateBall(); 
-    if ((yPos + size/2) > height)
+    if ((pos.y + size/2) > height)
     {
-      yVel *= -1;
-      posVel = false;
+      vel.y *= -1;
+      ballVelRising = false;
     }
   }
 }
 
-void ballRising()
+void ballVelRising()
 {
-  if (!posVel)
+  if (ballVelRising) //Ball is rising when the velocity is positive
   {
     updateBall();
-    if (yVel >= 0)
+    if (vel.y >= 0)
     {
-      yVel = 0;
-      posVel = true;
+      vel.y = 0;
+      ballVelRising = true;
     }
   }
 }
 
 void updateBall()
 {
-  ellipse(xPos, yPos, size, size);
-  yPos += yVel;
-  yVel += yAccel;
+  ellipse(pos.x, pos.y, size, size);
+  pos.y -= vel.y; //Velocity is subtracted from position so that the ball goes down with a negative velocity
+  vel.y -= accel.y; //Similar situation to above
 }
 
 void printValues()
 {
-  println("yPos is ", yPos);
-  println("yVel is ", yVel);
-  println("yAccel is ", yAccel);
+  println("pos.y is ", pos.y);
+  println("vel.y is ", vel.y);
+  println("accel.y is ", accel.y);
 }
 
 void drawSetup()
@@ -79,4 +70,3 @@ void drawSetup()
   background(255);
   fill(0);
 }
-*/
