@@ -20,42 +20,29 @@ void setup()
 void draw()
 {
   drawSetup();
-  ballFalling();
-  ballVelRising();
+  updateBall();
+  ball();
   printValues();
 }
-
-void ballFalling()
+void drawSetup()
 {
-  if (!ballVelRising) //Ball is falling when the velocity is negative
-  {
-    updateBall(); 
-    if ((pos.y + size/2) > height)
-    {
-      vel.y *= -1;
-      ballVelRising = false;
-    }
-  }
+  background(255);
+  fill(0);
 }
-
-void ballVelRising()
+void ball()
 {
-  if (ballVelRising) //Ball is rising when the velocity is positive
+  if ((pos.y) >= height)
   {
-    updateBall();
-    if (vel.y >= 0)
-    {
-      vel.y = 0;
-      ballVelRising = true;
-    }
+    vel.y = -12; //hard reset velocity y
+    println(pos.y);
   }
 }
 
 void updateBall()
 {
   ellipse(pos.x, pos.y, size, size);
-  pos.y -= vel.y; //Velocity is subtracted from position so that the ball goes down with a negative velocity
-  vel.y -= accel.y; //Similar situation to above
+  pos.y += vel.y; //Velocity is subtracted from position so that the ball goes down with a negative velocity
+  vel.y += accel.y; //Similar situation to above
 }
 
 void printValues()
@@ -63,10 +50,4 @@ void printValues()
   println("pos.y is ", pos.y);
   println("vel.y is ", vel.y);
   println("accel.y is ", accel.y);
-}
-
-void drawSetup()
-{
-  background(255);
-  fill(0);
 }
