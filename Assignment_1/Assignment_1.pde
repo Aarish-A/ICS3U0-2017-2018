@@ -4,7 +4,6 @@
  */
 
 PVector pos, vel, accel; //Initialize PVectors for the ball position, velocity, and acceleration
-boolean ballVelRising;
 float size;
 
 void setup()
@@ -12,17 +11,16 @@ void setup()
   size(300, 1000);
   pos = new PVector (150, 100);
   vel = new PVector (0, 0);
-  accel = new PVector (0, 0.5);
-  ballVelRising = false;
+  accel = new PVector (0, 0.09087);
   size = 25;
 }
 
 void draw()
 {
   drawSetup();
-  ball();
-  updateBall();
-  //printValues();
+  drawBall();
+  updatePos();
+  printValues();
 }
 
 void drawSetup()
@@ -31,21 +29,22 @@ void drawSetup()
   fill(0);
 }
 
-void ball()
+void drawBall()
+{
+  ellipse(pos.x, pos.y, size, size);
+}
+
+void updatePos()
 {
   if ((pos.y) >= height)
   {
-    vel.y *= -1; //hard reset velocity y
-   // vel.y += accel.y;
-    //pos.y = height;
-    println(vel.y);
+    vel.y *= -1;
+    pos.y = height;
+    //println(vel.y);
   }
-}
-
-void updateBall()
-{
-  ellipse(pos.x, pos.y, size, size);
+  
   pos.y += vel.y; //Velocity is subtracted from position so that the ball goes down with a negative velocity
+  
   if (!(pos.y + vel.y > height))
   {
     vel.y += accel.y; //Similar situation to above
