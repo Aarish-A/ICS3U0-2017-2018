@@ -3,24 +3,53 @@
  * October 4 - , 2017
  */
 
-PVector pos, vel, accel; //Initialize PVectors for the ball position, velocity, and acceleration
+//INITIALIZE BALL PROPERTIES
+float ballMass;
+float ballWeight;
 float size;
+float refArea;
+
+//INITIALIZE BALL VECTORS
+PVector ballPos;
+PVector ballVel;
+PVector ballAccel;
+
+//INITIALIZE EXTERNAL FORCES
+PVector dragForce;
+float dragCoef;
+float gravityAccel;
+
+//INITIALIZE AIR PROPERTIES
+float airDensity;
+
+
+void settings()
+{
+  size(500, 1000);
+}
 
 void setup()
 {
-  size(300, 1000);
-  pos = new PVector (150, 100);
-  vel = new PVector (0, 0);
-  accel = new PVector (0, 0.09087);
+  //SETUP BALL PROPERTIES
   size = 25;
+  
+  //SETUP BALL VECTORS
+  ballPos = new PVector (250, 100);
+  ballVel = new PVector (0, 0);
+  ballAccel = new PVector (0, -0.09087);
+  
+  //SETUP EXTERNAL FORCES
+  
+  //SETUP AIR PROPERTIES
 }
 
 void draw()
 {
   drawSetup();
   drawBall();
+  updateAccel();
   updatePos();
-  printValues();
+  //printValues();
 }
 
 void drawSetup()
@@ -31,29 +60,34 @@ void drawSetup()
 
 void drawBall()
 {
-  ellipse(pos.x, pos.y, size, size);
+  ellipse(ballPos.x, ballPos.y, size, size);
+}
+
+void updateAccel()
+{
+    
 }
 
 void updatePos()
 {
-  if ((pos.y) >= height)
+  if ((ballPos.y) >= height)
   {
-    vel.y *= -1;
-    pos.y = height;
-    //println(vel.y);
+    ballVel.y *= -1;
+    ballPos.y = height;
+    println(ballVel.y);
   }
-  
-  pos.y += vel.y; //Velocity is subtracted from position so that the ball goes down with a negative velocity
-  
-  if (!(pos.y + vel.y > height))
+
+  ballPos.y += ballVel.y; 
+
+  if (!(ballPos.y + ballVel.y > height))
   {
-    vel.y += accel.y; //Similar situation to above
+    ballVel.y -= ballAccel.y; //Acceleration is subtracted from position so that the velocity decreases with a negative acceleration
   }
 }
 
 void printValues()
 {
-  println("pos.y is ", pos.y);
-  println("vel.y is ", vel.y);
-  println("accel.y is ", accel.y);
+  println("pos.y is ", ballPos.y);
+  println("vel.y is ", ballVel.y);
+  println("accel.y is ", ballAccel.y);
 }
