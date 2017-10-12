@@ -3,6 +3,9 @@
  * October 4 - , 2017
  */
 
+//INITIALIZE CONSTANTS
+float gravityAccel;
+
 //INITIALIZE BALL PROPERTIES
 float ballMass;
 float ballWeight;
@@ -15,9 +18,8 @@ PVector ballVel;
 PVector ballAccel;
 
 //INITIALIZE EXTERNAL FORCES
-PVector dragForce;
 float dragCoef;
-float gravityAccel;
+PVector dragForce;
 
 //INITIALIZE AIR PROPERTIES
 float airDensity;
@@ -30,17 +32,26 @@ void settings()
 
 void setup()
 {
-  //SETUP BALL PROPERTIES
+  //SETUP CONSTANTS
+  gravityAccel = -9.807;
+
+  //SETUP BALL PROPERTIES 
+  ballMass = 15; //Arbritrary value
+  ballWeight = ballMass * gravityAccel;
   size = 25;
-  
+  refArea = (2 * TWO_PI * ((size/2) * (size/2)));   
+
   //SETUP BALL VECTORS
   ballPos = new PVector (250, 100);
   ballVel = new PVector (0, 0);
-  ballAccel = new PVector (0, -0.09087);
-  
-  //SETUP EXTERNAL FORCES
-  
+  ballAccel = new PVector (0, 0);
+
   //SETUP AIR PROPERTIES
+  airDensity = 1.225;
+
+  //SETUP EXTERNAL FORCES
+  dragCoef = 0.47;
+  dragForce = new PVector (0, 0);  
 }
 
 void draw()
@@ -65,7 +76,9 @@ void drawBall()
 
 void updateAccel()
 {
-    
+  dragForce.y = dragCoef * ((airDensity * (ballVel.y * ballVel.y)) / 2) * refArea;
+  //ballAccel.y = (ballWeight - dragForce.y) / ballMass;
+  println(dragForce.y);
 }
 
 void updatePos()
@@ -74,7 +87,7 @@ void updatePos()
   {
     ballVel.y *= -1;
     ballPos.y = height;
-    println(ballVel.y);
+    //println(ballVel.y);
   }
 
   ballPos.y += ballVel.y; 
