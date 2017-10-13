@@ -47,11 +47,11 @@ void setup()
   ballAccel = new PVector (0, 0);
 
   //SETUP AIR PROPERTIES
-  airDensity = 1.225;
+  airDensity = 0.001225; //kg per cubic meter
 
   //SETUP EXTERNAL FORCES
   dragCoef = 0.47;
-  dragForce = new PVector (0, 0);  
+  dragForce = new PVector (0, 0);
 }
 
 void draw()
@@ -77,7 +77,15 @@ void drawBall()
 void updateAccel()
 {
   dragForce.y = dragCoef * ((airDensity * (ballVel.y * ballVel.y)) / 2) * refArea;
-  //ballAccel.y = (ballWeight - dragForce.y) / ballMass;
+  
+  if (dragForce.y > ballVel.y)
+  {
+    ballAccel.y = 0;
+  }
+  else
+  {
+    ballAccel.y = (ballWeight - dragForce.y) / ballMass;    
+  }
   println(dragForce.y);
 }
 
