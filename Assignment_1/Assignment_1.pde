@@ -3,25 +3,17 @@
  * October 4 - , 2017
  */
 
-//INITIALIZE CONSTANTS
+//INIT BALL OBJECT
+Ball b1;
+
+//INIT CONSTANTS
 float gravityAccel;
 
-//INITIALIZE BALL PROPERTIES
-float ballMass;
-float ballWeight;
-float size;
-float refArea;
-
-//INITIALIZE BALL VECTORS
-PVector ballPos;
-PVector ballVel;
-PVector ballAccel;
-
-//INITIALIZE EXTERNAL FORCES
+//INIT EXTERNAL FORCES
 float dragCoef;
 PVector dragForce;
 
-//INITIALIZE AIR PROPERTIES
+//INIT AIR PROPERTIES
 float airDensity;
 
 
@@ -32,83 +24,33 @@ void settings()
 
 void setup()
 {
-  //SETUP CONSTANTS
-  gravityAccel = -9.807;
+  colorMode(HSB);
 
-  //SETUP BALL PROPERTIES 
-  ballMass = 15; //Arbritrary value
-  ballWeight = ballMass * gravityAccel;
-  size = 25;
-  refArea = (2 * TWO_PI * ((size/2) * (size/2)));   
+  //SET CONSTANTS
+  gravityAccel = -9.807 / 60;
 
-  //SETUP BALL VECTORS
-  ballPos = new PVector (250, 100);
-  ballVel = new PVector (0, 0);
-  ballAccel = new PVector (0, 0);
-
-  //SETUP AIR PROPERTIES
   airDensity = 0.001225; //kg per cubic meter
 
-  //SETUP EXTERNAL FORCES
+  //SET EXTERNAL FORCES
   dragCoef = 0.47;
   dragForce = new PVector (0, 0);
+
+  //CREATE BALL OBJECT
+  b1 = new Ball();
 }
 
 void draw()
 {
   drawSetup();
-  drawBall();
-  updateAccel();
-  updatePos();
+  b1.updateBall();
+  b1.updatePos();
+  b1.updateAccel();
+  b1.printBallVectors();
   //printValues();
 }
 
 void drawSetup()
 {
-  background(255);
+  background(b1.pos.y % 255, 150, 230);
   fill(0);
-}
-
-void drawBall()
-{
-  ellipse(ballPos.x, ballPos.y, size, size);
-}
-
-void updateAccel()
-{
-  dragForce.y = dragCoef * ((airDensity * (ballVel.y * ballVel.y)) / 2) * refArea;
-  
-  if (dragForce.y > ballVel.y)
-  {
-    ballAccel.y = 0;
-  }
-  else
-  {
-    ballAccel.y = (ballWeight - dragForce.y) / ballMass;    
-  }
-  println(dragForce.y);
-}
-
-void updatePos()
-{
-  if ((ballPos.y) >= height)
-  {
-    ballVel.y *= -1;
-    ballPos.y = height;
-    //println(ballVel.y);
-  }
-
-  ballPos.y += ballVel.y; 
-
-  if (!(ballPos.y + ballVel.y > height))
-  {
-    ballVel.y -= ballAccel.y; //Acceleration is subtracted from position so that the velocity decreases with a negative acceleration
-  }
-}
-
-void printValues()
-{
-  println("pos.y is ", ballPos.y);
-  println("vel.y is ", ballVel.y);
-  println("accel.y is ", ballAccel.y);
 }
