@@ -25,11 +25,12 @@ void settings()
 void setup()
 {
   colorMode(HSB);
+  //frameRate(10);
 
   //SET CONSTANTS
   gravityAccel = -9.807 / 60;
 
-  airDensity = 0.001225; //kg per cubic meter
+  airDensity = 1.225 / 60; //kg per cubic meter
 
   //SET EXTERNAL FORCES
   dragCoef = 0.47;
@@ -51,6 +52,7 @@ void draw()
 
 void drawSetup()
 {
-  background(b1.pos.y % 255, 150, 230);
+  //background(b1.pos.y % 255, 150, 230);
+  background(255);
   fill(0);
 }

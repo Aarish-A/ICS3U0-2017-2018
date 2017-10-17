@@ -3,7 +3,7 @@ class Ball
   //INIT BALL PROPERTIES
   float mass;
   float weight;
-  float size;
+  float diameter;
   float refArea;
 
   //INIT BALL VECTORS
@@ -16,8 +16,8 @@ class Ball
     //SET BALL PROPERTIES 
     mass = 15; //Arbritrary value
     weight = mass * gravityAccel;
-    size = 10;
-    refArea = (2 * TWO_PI * ((size/2) * (size/2)));
+    diameter = 10;
+    refArea = (2 * TWO_PI * (pow(diameter / 2, 2)));
 
     //SET BALL VECTORS
     pos = new PVector (250, 100);
@@ -27,7 +27,7 @@ class Ball
 
   void updateBall()
   {
-    ellipse(pos.x, pos.y, size, size);
+    ellipse(pos.x, pos.y, diameter, diameter);
   }
 
   void updatePos()
@@ -49,17 +49,15 @@ class Ball
 
   void updateAccel()
   {
-    dragForce.y = dragCoef * ((airDensity * (vel.y * vel.y)) / 2) * refArea;
-    accel.y = ((weight - dragForce.y) / mass) / 60;
-    //println("drag force =", dragForce.y);
-    //println("ball acceleration =", accel.y);
+    dragForce.y = (dragCoef * ((airDensity * (pow(vel.y, 2))) / 2) * refArea) / 60;
+    accel.y = (weight - dragForce.y) / mass;
   }
 
   void printBallVectors()
   {
-    println("Ball Pos =", b1.pos.y);
-    println("Ball Vel =", b1.vel.y);
-    println("Ball Accel =", b1.accel.y);
-    println("Ball DF =", b1.accel.y);
+    println("Ball Pos =", pos.y);
+    println("Ball Vel =", vel.y);
+    println("Ball Accel =", accel.y);
+    println("Ball DF =", dragForce.y);
   }
 }
