@@ -4,6 +4,7 @@ class Ball
   float mass;
   float weight;
   float diameter;
+  float radius;
   float refArea;
 
   //INIT BALL VECTORS
@@ -17,10 +18,11 @@ class Ball
     mass = 15; //Arbritrary value
     weight = mass * gravityAccel;
     diameter = 10;
-    refArea = (2 * TWO_PI * (pow(diameter / 2, 2)));
+    radius = diameter / 2;
+    refArea = (2 * TWO_PI * (pow(radius, 2)));
 
     //SET BALL VECTORS
-    pos = new PVector (250, 100);
+    pos = new PVector (250, 0);
     vel = new PVector (0, 0);
     accel = new PVector (0, 0);
   }
@@ -35,8 +37,7 @@ class Ball
     if ((pos.y) >= height)
     {
       vel.y *= -1;
-      pos.y = height;
-      //println(ballVel.y);
+      pos.y = height - (radius);
     }
 
     pos.y += vel.y; 
@@ -50,7 +51,7 @@ class Ball
   void updateAccel()
   {
     dragForce.y = (dragCoef * ((airDensity * (pow(vel.y, 2))) / 2) * refArea) / 60;
-    accel.y = (weight - dragForce.y) / mass;
+    accel.y = ((weight - dragForce.y) / mass);
   }
 
   void printBallVectors()

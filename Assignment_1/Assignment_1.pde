@@ -19,7 +19,7 @@ float airDensity;
 
 void settings()
 {
-  size(500, 1000);
+  size(500, 600);
 }
 
 void setup()
@@ -33,7 +33,7 @@ void setup()
   airDensity = 1.225 / 60; //kg per cubic meter
 
   //SET EXTERNAL FORCES
-  dragCoef = 0.47;
+  dragCoef = 0.5;
   dragForce = new PVector (0, 0);
 
   //CREATE BALL OBJECT
@@ -46,7 +46,7 @@ void draw()
   b1.updateBall();
   b1.updatePos();
   b1.updateAccel();
-  b1.printBallVectors();
+  b1.printBallVectors(); //<>//
   //printValues();
 }
 
@@ -56,3 +56,5 @@ void drawSetup()
   background(255);
   fill(0);
 }
+
+//http://www.ambrsoft.com/Physics/FreeFall/FreeFallWairResistance.htm
