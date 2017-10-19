@@ -1,10 +1,7 @@
-/* Aarish Adeel
+/* Aarish Adeel //<>//
  * Assignment 1 — ICS3UO
  * October 4 - , 2017
  */
-
-//INIT BALL OBJECT
-Ball b1;
 
 //INIT CONSTANTS
 float gravityAccel;
@@ -15,6 +12,12 @@ PVector dragForce;
 
 //INIT AIR PROPERTIES
 float airDensity;
+
+//INIT TIME
+float time;
+
+//INIT BALL OBJECT
+Ball b1;
 
 
 void settings()
@@ -36,6 +39,9 @@ void setup()
   dragCoef = 0.5;
   dragForce = new PVector (0, 0);
 
+  //INIT TIME
+  time = 0;
+
   //CREATE BALL OBJECT
   b1 = new Ball();
 }
@@ -43,11 +49,12 @@ void setup()
 void draw()
 {
   drawSetup();
+  updateTime();
   b1.updateBall();
   b1.updatePos();
   b1.updateAccel();
-  b1.printBallVectors(); //<>//
-  //printValues();
+  //b1.printBallVectors();
+  //printTime();
 }
 
 void drawSetup()
@@ -55,6 +62,18 @@ void drawSetup()
   //background(b1.pos.y % 255, 150, 230);
   background(255);
   fill(0);
+}
+
+void updateTime()
+{
+  time = millis();
+  textSize(25);
+  text(time / 1000, 400, 50);
+}
+
+void printTime()
+{
+  println(time / 1000);
 }
 
 //http://www.ambrsoft.com/Physics/FreeFall/FreeFallWairResistance.htm
