@@ -31,9 +31,9 @@ void setup()
   //frameRate(10);
 
   //SET CONSTANTS
-  gravityAccel = -9.807 / 60;
+  gravityAccel = -9.807;
 
-  airDensity = 1.225 / 60; //kg per cubic meter
+  airDensity = 1.225; //kg per cubic meter
 
   //SET EXTERNAL FORCES
   dragCoef = 0.5;
@@ -51,7 +51,7 @@ void draw()
   drawSetup();
   updateTime();
   b1.updateBall();
-  b1.updatePos();
+  //b1.updatePos();
   b1.updateAccel();
   //b1.printBallVectors();
   //printTime();
