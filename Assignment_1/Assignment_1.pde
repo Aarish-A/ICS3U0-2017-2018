@@ -1,79 +1,68 @@
-/* Aarish Adeel //<>//
- * Assignment 1 — ICS3UO
- * October 4 - , 2017
- */
+//Global variables //<>//
+int screenNum;
 
-//INIT CONSTANTS
-float gravityAccel;
+//Variables for start screen
+int propertyNum;
+float startScreenTime;
+char letter;
+String inputDiameter;
+String inputMass;
+String inputY;
 
-//INIT EXTERNAL FORCES
-float dragCoef;
-PVector dragForce;
-
-//INIT AIR PROPERTIES
+//Variables for bounce screen
+float gAccel;
 float airDensity;
-
-//INIT TIME
+float dragC;
 float time;
-
-//INIT BALL OBJECT
+float finalTime;
+PVector dragF;
+boolean ballBouncing;
 Ball b1;
+
+//Variables for end screen
+
 
 
 void settings()
 {
-  size(500, 600);
+  size(600, 600);
 }
 
 void setup()
 {
-  colorMode(HSB);
-  //frameRate(10);
+  //Global setup
+  frameRate(60);
+  screenNum = 0; //Screen number
 
-  //SET CONSTANTS
-  gravityAccel = -9.807;
+  //Variables for start screen
+  propertyNum = 0;
+  startScreenTime = 0;
+  letter = key;
+  inputDiameter = "";
+  inputMass = "";
+  inputY = "";
 
-  airDensity = 1.225; //kg per cubic meter
-
-  //SET EXTERNAL FORCES
-  dragCoef = 0.5;
-  dragForce = new PVector (0, 0);
-
-  //INIT TIME
-  time = 0;
-
-  //CREATE BALL OBJECT
-  b1 = new Ball();
+  //Variables for bounce screen
+  gAccel = -9.807 / 3600; //Meters per second squared
+  airDensity = 1.225; //Kilograms per cubic meter
+  dragC = 0.5; //Arbritrary value
+  time = 0; //Seconds
+  dragF = new PVector (0, 0); //Newtons (kilograms * meters per second squared)
+  ballBouncing = true;
 }
 
 void draw()
 {
-  drawSetup();
-  updateTime();
-  b1.updateBall();
-  //b1.updatePos();
-  b1.updateAccel();
-  //b1.printBallVectors();
-  //printTime();
+  switch (screenNum)
+  {
+  case 0:
+    startScreen();
+    break;
+  case 1:
+    bounceScreen();
+    break;
+  case 2:
+    endScreen();
+    break;
+  }
 }
-
-void drawSetup()
-{
-  //background(b1.pos.y % 255, 150, 230);
-  background(255);
-  fill(0);
-}
-
-void updateTime()
-{
-  time = millis();
-  textSize(25);
-  text(time / 1000, 400, 50);
-}
-
-void printTime()
-{
-  println(time / 1000);
-}
-
-//http://www.ambrsoft.com/Physics/FreeFall/FreeFallWairResistance.htm
