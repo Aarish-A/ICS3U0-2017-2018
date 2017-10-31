@@ -1,89 +1,69 @@
 class Ball
 {
-  //INIT BALL PROPERTIES
-  float mass;
-  float weight;
   float diameter;
   float radius;
+  float mass;
+  float weight;
   float refArea;
 
-
-  //INIT BALL VECTORS
   PVector pos;
   PVector vel;
   PVector accel;
+  PVector tVel;
 
-  float tVel;
-  boolean reachedTerminal;
-
-  Ball()
+  Ball(float _diameter, float _mass, float _x, float _y)
   {
-    //SET BALL PROPERTIES 
-    mass = 15; //Arbritrary value
-    weight = mass * gravityAccel;
-    diameter = 10;
-    radius = diameter / 2;
-    refArea = (2 * TWO_PI * (pow(radius, 2)));
+    diameter = _diameter; //Meters
+    radius = diameter/2; //Meters
+    mass = _mass; //Kilograms
+    weight = mass * gAccel; //Kilograms * meters per second squared
+    refArea = (2 * TWO_PI * (radius * radius)); //Meters squared
 
-    //SET BALL VECTORS
-    pos = new PVector (250, 0);
-    vel = new PVector (0, 0);
-    accel = new PVector (0, 0);
-
-    tVel = -(sqrt((2 * mass * -(gravityAccel)) / (airDensity * refArea * dragCoef)));
-    boolean reachedTerminal = false;
+    pos = new PVector (_x, _y); //Meters
+    vel = new PVector (0, 0); //Meters per second
+    accel = new PVector (0, 0); //Meters per second squared
+    tVel = new PVector (0, -(sqrt((2 * mass * -(gAccel)) / (airDensity * refArea * dragC)))); //Meters per second
   }
 
-  void updateBall()
+  void drawBall()
   {
     ellipse(pos.x, pos.y, diameter, diameter);
   }
 
-  //void updatePos()
-  //{
-  //  if ((pos.y) >= height)
-  //  {
-  //    vel.y *= -1;
-  //    pos.y = height - (radius);
-  //  }
-
-  //  pos.y += vel.y; 
-
-  //  if (!(pos.y + vel.y > height))
-  //  {
-  //    vel.y -= accel.y; //Acceleration is subtracted from position so that the velocity decreases with a negative acceleration
-  //  }
-  //}
+  void updateDragForce()
+  {
+    dragF.y = (dragC * ((airDensity * vel.y * vel.y) / 2) * refArea) / 3600;
+  }
 
   void updateAccel()
   {
-    dragForce.y = dragCoef * ((airDensity * pow(vel.y, 2) / 2) * refArea);
-    
-    if ((dragForce.y + weight) > 0)
-    {
-      reachedTerminal = true;
-    }
-    
-    if (reachedTerminal == true)
-    {
-      vel.y = (tVel) / 60;
-      accel.y = 0;
-    }
-    
-    if (reachedTerminal == false)
-    {
-      accel.y = ((weight - dragForce.y) / 15) / 60;
-    }
-    
-    vel.y += accel.y;
-    pos.y += -(vel.y);
+    accel.y = (weight - dragF.y) / mass;
   }
 
-  void printBallVectors()
+  void updateVel()
   {
-    println("Ball Pos =", pos.y);
-    println("Ball Vel =", vel.y);
-    println("Ball Accel =", accel.y);
-    println("Ball DF =", dragForce.y);
+    vel.y += accel.y;
+    if ((pos.y) > (height - radius))
+    {
+      vel.y *= -0.55;
+      if (vel.y < 0.01)
+      {
+        ballBouncing = false;
+        pos.y = height - radius;
+      }
+    }
+  }
+
+  void updatePos()
+  {
+    pos.y -= vel.y;
+  }
+
+  void printValues()
+  {
+    println("Drag Force is", dragF.y);
+    println("Acceleration is", accel.y);
+    println("Velocity is", vel.y);
+    println("Ball Y is", pos.y);
   }
 }
