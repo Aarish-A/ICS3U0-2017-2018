@@ -1,23 +1,28 @@
+//Ball class
+
 class Ball
 {
+  //BALL PHYSICAL PROPERTIES
   float diameter;
   float radius;
   float mass;
   float weight;
   float refArea;
 
+  //BALL VECTORS
   PVector pos;
   PVector vel;
   PVector accel;
   PVector tVel;
 
-  Ball(float _diameter, float _mass, float _x, float _y)
+  //BALL CONSTRUCTOR
+  Ball (float _d, float _m, float _x, float _y)
   {
-    diameter = _diameter; //Meters
-    radius = diameter/2; //Meters
-    mass = _mass; //Kilograms
-    weight = mass * gAccel; //Kilograms * meters per second squared
-    refArea = (2 * TWO_PI * (radius * radius)); //Meters squared
+    diameter = _d; //Meters
+    radius = diameter / 2; //Meters
+    mass = _m; //Kilograms
+    weight = mass * gAccel; //Kilograms * meters per frame squared
+    refArea = 2 * TWO_PI * (radius * radius); //Meters squared
 
     pos = new PVector (_x, _y); //Meters
     vel = new PVector (0, 0); //Meters per second
@@ -32,7 +37,7 @@ class Ball
 
   void updateDragForce()
   {
-    dragF.y = (dragC * ((airDensity * vel.y * vel.y) / 2) * refArea) / 3600;
+    dragF.y = (dragC * ((airDensity * vel.y * vel.y) / 2) * refArea) / 3600; //Converts from seconds squared to frames squared
   }
 
   void updateAccel()
@@ -54,12 +59,12 @@ class Ball
       }
     }
   }
-
+  
   void updatePos()
   {
-    pos.y -= vel.y;
+    pos.y -= vel.y; //Ball falls down with negative velocity, bounces up with positive velocity
   }
-
+  
   void printValues()
   {
     println("Drag Force is", dragF.y);
