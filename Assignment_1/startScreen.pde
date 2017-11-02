@@ -2,33 +2,68 @@ void startScreen()
 {
   background(255);
 
-  //Slider slides
+  //Draws slider rails
   fill(127);
   rectMode(CORNER);
   rect(50, 75, 500, 10);
   rect(50, 175, 500, 10);
   rect(50, 275, 500, 10);
 
-  //Slider text
+  //Displays start screen text info
   fill(0);
   textSize(30);
+  textAlign(LEFT);
   text("Diameter: " + inputD, 50, 60);
   text("Mass: " + inputM, 50, 160);
   text("Starting Height: " + inputY, 50, 260);
+  textAlign(CENTER);
+  text("Press ENTER to continue onto the next" + "\n" + "screen after choosing your values", width/2, height*0.75);
 
-  //Slider handles
+  //Draws slider handles
   rectMode(CENTER);
-  rect(slider1, 80, 30, 20);
-  rect(slider2, 180, 30, 20);
-  rect(slider3, 280, 30, 20);
+  rect(sliderDX, 80, 30, 20);
+  rect(sliderMX, 180, 30, 20);
+  rect(sliderYX, 280, 30, 20);
   
-  inputD = int(slider1);
-  inputM = int(slider2);
-  inputY = int(slider3);
+  //Updates slider position based on mouse x value after the respective slider handle has been clicked
+  if (sliderDP) { sliderDX = constrain(mouseX, 50, 550); }
+  if (sliderMP) { sliderMX = constrain(mouseX, 50, 550); }
+  if (sliderYP) { sliderYX = constrain(mouseX, 50, 550); }
+
+  //Maps slider position to input variable
+  inputD = int(map(sliderDX, 50, 550, 1, 50));
+  inputM = int(map(sliderMX, 50, 550, 1, 100));
+  inputY = int(map(sliderYX, 50, 550, 1, 600));
+}
+
+void mousePressed()
+{
+  //Sets the boolean that allows the slider to move to true when a respective slider handle is clicked
+  if (((mouseX < sliderDX + 15) && (mouseX > sliderDX - 15)) && ((mouseY < 80 + 10) && (mouseY > 80 - 10)))
+  {
+    sliderDP = true;
+  }
+  if (((mouseX < sliderMX + 15) && (mouseX > sliderMX - 15)) && ((mouseY < 180 + 10) && (mouseY > 180 - 10)))
+  {
+    sliderMP = true;
+  }
+  if (((mouseX < sliderYX + 15) && (mouseX > sliderYX - 15)) && ((mouseY < 280 + 10) && (mouseY > 280 - 10)))
+  {
+    sliderYP = true;
+  }
+}
+
+void mouseReleased()
+{
+  //Sets the boolean that allws the slider to move to false when the mouse is released
+  sliderDP = false;
+  sliderMP = false;
+  sliderYP = false;
 }
 
 void keyTyped()
 {
+  //Jumps to next screen and creates ball object based on input variables when enter is pressed
   if (key == ENTER)
   {
     b1 = new Ball(inputD, inputM, width/2, height - inputY);
@@ -38,7 +73,7 @@ void keyTyped()
 }
 
 
-
+/* Old code that set ball properties and height based on raw input from user */
 
 //void startScreen()
 //{

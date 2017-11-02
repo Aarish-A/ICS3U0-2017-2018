@@ -1,18 +1,25 @@
-//Global variables //<>//
+/* Aarish Adeel //<>//
+ * Assignment 1
+ * ICS 3U0
+ * 10/13/17 - 11/02/17
+ */
+
+//GLOBAL VARIABLES
 int screenNum;
 
-//Variables for start screen
-int propertyNum;
+//START SCREEN VARIABLES
 float startScreenTime;
-char letter;
 int inputD;
 int inputM;
 int inputY;
-float slider1;
-float slider2;
-float slider3;
+float sliderDX;
+float sliderMX;
+float sliderYX;
+boolean sliderDP;
+boolean sliderMP;
+boolean sliderYP;
 
-//Variables for bounce screen
+//BOUNCE SCREEN VARIABLES
 float gAccel;
 float airDensity;
 float dragC;
@@ -22,10 +29,6 @@ PVector dragF;
 boolean ballBouncing;
 Ball b1;
 
-//Variables for end screen
-
-
-
 void settings()
 {
   size(600, 600);
@@ -33,32 +36,34 @@ void settings()
 
 void setup()
 {
-  //Global setup
+  //GLOBAL SETUP
   frameRate(60);
-  screenNum = 0; //Screen number
+  screenNum = 0;
 
-  //Variables for start screen
-  propertyNum = 0;
+  //START SCREEN SETUP
   startScreenTime = 0;
-  letter = key;
   inputD = 0;
   inputM = 0;
   inputY = 0;
-  slider1 = 50;
-  slider2 = 50;
-  slider3 = 50;
+  sliderDX = 50;
+  sliderMX = 50;
+  sliderYX = 50;
+  sliderDP = false;
+  sliderMP = false;
+  sliderYP = false;
 
-  //Variables for bounce screen
-  gAccel = -9.807 / 3600; //Meters per second squared
+  //BOUNCE SCREEN SETUP
+  gAccel = -9.807 / 3600; //Meters per frame squared
   airDensity = 1.225; //Kilograms per cubic meter
-  dragC = 0.5; //Arbritrary value
+  dragC = 0.5; //Unitless
   time = 0; //Seconds
-  dragF = new PVector (0, 0); //Newtons (kilograms * meters per second squared)
+  dragF = new PVector (0, 0); //Newtons
   ballBouncing = true;
 }
 
 void draw()
 {
+  //Display screen based on screenNum
   switch (screenNum)
   {
   case 0:
