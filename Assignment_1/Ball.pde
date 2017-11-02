@@ -45,6 +45,7 @@ class Ball
     vel.y += accel.y;
     if ((pos.y) > (height - radius))
     {
+      pos.y = height - radius;
       vel.y *= -0.55;
       if (vel.y < 0.01)
       {
