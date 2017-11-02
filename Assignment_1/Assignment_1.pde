@@ -5,9 +5,12 @@ int screenNum;
 int propertyNum;
 float startScreenTime;
 char letter;
-String inputDiameter;
-String inputMass;
-String inputY;
+int inputD;
+int inputM;
+int inputY;
+float slider1;
+float slider2;
+float slider3;
 
 //Variables for bounce screen
 float gAccel;
@@ -38,9 +41,12 @@ void setup()
   propertyNum = 0;
   startScreenTime = 0;
   letter = key;
-  inputDiameter = "";
-  inputMass = "";
-  inputY = "";
+  inputD = 0;
+  inputM = 0;
+  inputY = 0;
+  slider1 = 50;
+  slider2 = 50;
+  slider3 = 50;
 
   //Variables for bounce screen
   gAccel = -9.807 / 3600; //Meters per second squared
