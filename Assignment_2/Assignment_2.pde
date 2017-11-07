@@ -5,11 +5,11 @@
  */
 
 //Player's ship objects
-Ship s = new Ship();
+Ship player = new Ship();
 
 //Laser objects
 ArrayList<Laser> lasers;
-Laser las;
+Laser laser;
 
 //Enemy alien objects
 ArrayList<Alien> aliens;
@@ -29,18 +29,19 @@ void setup()
 void draw()
 {
   background(0);
-  s.update();
+  player.update();
 
   for (int i = lasers.size()-1; i >= 0; i--)
   {
-    Laser las = lasers.get(i);
-    las.update();
-    if (las.finished())
+    Laser laser = lasers.get(i);
+    laser.update();
+    
+    if (laser.finished())
     {
       lasers.remove(i);
     }
   }
-  
+
   for (int i = aliens.size()-1; i >= 0; i--)
   {
     Alien alien = aliens.get(i);

@@ -5,7 +5,7 @@ class Laser
 
   Laser()
   {
-    pos = new PVector(s.pos.x, s.pos.y - s.size.y);
+    pos = new PVector(player.pos.x, player.pos.y - player.size.y);
     size = new PVector(10, 25);
   }
 
@@ -19,23 +19,13 @@ class Laser
 
   boolean finished()
   {
-    if (checkEdges()) 
-    { 
-      return true;
-    }
-    else 
-    { 
-      return false;
-    }
+    if (checkEdges()) return true;
+    else return false;
   }
 
   boolean checkEdges()
   {
-    if ((pos.y + (pos.y / 2)) < 0)
-    {
-      return true;
-    } else {
-      return false;
-    }
+    if ((pos.y + (pos.y / 2)) < 0) return true;
+    else return false;
   }
 }

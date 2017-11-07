@@ -21,22 +21,13 @@ class Alien
 
   boolean finished()
   {
-    if (checkEdges())
-    {
-      return true;
-    } else 
-    {
-      return false;
-    }
+    if (checkEdges()) return true;
+    else return false;
   }
 
   boolean checkEdges()
   {
-    if ((pos.y - (size.y / 2)) > height)
-    {
-      return true;
-    } else {
-      return false;
-    }
+    if ((pos.y - (size.y / 2)) > height) return true;
+    else return false;
   }
 }
