@@ -3,17 +3,16 @@
  * ICS 3U0
  * 11/06/17 - 
  */
+ 
+ 
+Ship player;
 
-//Player's ship objects
-Ship player = new Ship();
-
-//Laser objects
 ArrayList<Laser> lasers;
 Laser laser;
 
-//Enemy alien objects
 ArrayList<Alien> aliens;
 Alien alien;
+ 
 
 void settings()
 {
@@ -22,16 +21,25 @@ void settings()
 
 void setup()
 {
+  player = new Ship();
   lasers = new ArrayList<Laser>();
   aliens = new ArrayList<Alien>();
 }
-
+ 
+ 
 void draw()
 {
   background(0);
+  
   player.update();
+  updateLasers();
+  updateAliens();
+  checkCollision();
+}
 
-  for (int i = lasers.size()-1; i >= 0; i--)
+void updateLasers()
+{
+  for (int i = lasers.size() - 1; i >= 0; i--)
   {
     Laser laser = lasers.get(i);
     laser.update();
@@ -41,11 +49,15 @@ void draw()
       lasers.remove(i);
     }
   }
+}
 
-  for (int i = aliens.size()-1; i >= 0; i--)
+void updateAliens()
+{
+  for (int i = aliens.size() - 1; i >= 0; i--)
   {
     Alien alien = aliens.get(i);
     alien.update();
+    
     if (alien.finished())
     {
       aliens.remove(i);
@@ -53,10 +65,30 @@ void draw()
   }
 }
 
+void checkCollision()
+{
+  for (int i = lasers.size() - 1; i >= 0; i --)
+  {
+    Laser laser = lasers.get(i);
+    for (int j = aliens.size() - 1; i >= 0; i --)
+    {
+      Alien alien = aliens.get(j);
+      float distance = dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x);
+      println(distance);
+      
+      if (distance <= 5)
+      {
+        lasers.remove(i);
+        aliens.remove(j);
+        //println(distance);
+      }
+    }
+  }
+}
+
 void mousePressed()
 {
-  lasers.add(new Laser());
-  aliens.add(new Alien(random(width), random(0, height/5), 15, 1));
-  println("Lasers:", lasers.size());
-  println("Aliens:", aliens.size());
+  lasers.add(new Laser(5));
+  //aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
+  aliens.add(new Alien(mouseX, random(0, height/6), 15, 1));
 }
