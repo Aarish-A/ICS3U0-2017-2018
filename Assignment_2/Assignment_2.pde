@@ -31,6 +31,11 @@ void draw()
 {
   background(0);
   
+  //if (frameCount % 60 == 0)
+  //{
+  //  aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
+  //}
+  
   player.update();
   updateLasers();
   updateAliens();
@@ -72,16 +77,27 @@ void checkCollision()
     Laser laser = lasers.get(i);
     for (int j = aliens.size() - 1; i >= 0; i --)
     {
-      Alien alien = aliens.get(j);
-      float distance = dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x);
-      println(distance);
+      Alien alien = aliens.get(i);
+      PVector d = PVector.sub(laser.pos, alien.pos);
+      float distance = d.mag();
       
-      if (distance <= 5)
+      if (distance < 5)
       {
         lasers.remove(i);
-        aliens.remove(j);
-        //println(distance);
+        aliens.remove(i);
       }
+      
+      //Alien alien = aliens.get(j);
+      //println(aliens.size());
+      ////float distance = dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x);
+      ////println(distance);
+      
+      //if (dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x) <= 5)
+      //{
+      //  lasers.remove(i);
+      //  aliens.remove(j);
+      //  //println(distance);
+      //}
     }
   }
 }
