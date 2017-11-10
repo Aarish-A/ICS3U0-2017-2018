@@ -30,12 +30,16 @@ void setup()
 void draw()
 {
   background(0);
+<<<<<<< HEAD
 
   if (frameCount % 60 == 0)
   {
     aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
   }
 
+=======
+  
+>>>>>>> parent of a1f8b08... Fixed exception error on collision mechanic
   player.update();
   updateLasers();
   updateAliens();
@@ -76,6 +80,7 @@ void checkCollision()
   {
     for (int j = aliens.size() - 1; j >= 0; j --)
     {
+<<<<<<< HEAD
       //Laser laser = lasers.get(i);
       //Alien alien = aliens.get(j);
       
@@ -92,6 +97,17 @@ void checkCollision()
       {
         lasers.remove(i);
         aliens.remove(j);
+=======
+      Alien alien = aliens.get(j);
+      float distance = dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x);
+      println(distance);
+      
+      if (distance <= 5)
+      {
+        lasers.remove(i);
+        aliens.remove(j);
+        //println(distance);
+>>>>>>> parent of a1f8b08... Fixed exception error on collision mechanic
       }
     }
   }
