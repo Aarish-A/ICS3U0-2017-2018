@@ -3,8 +3,8 @@
  * ICS 3U0
  * 11/06/17 - 
  */
- 
- 
+
+
 Ship player;
 
 ArrayList<Laser> lasers;
@@ -12,7 +12,7 @@ Laser laser;
 
 ArrayList<Alien> aliens;
 Alien alien;
- 
+
 
 void settings()
 {
@@ -25,17 +25,17 @@ void setup()
   lasers = new ArrayList<Laser>();
   aliens = new ArrayList<Alien>();
 }
- 
- 
+
+
 void draw()
 {
   background(0);
-  
-  //if (frameCount % 60 == 0)
-  //{
-  //  aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
-  //}
-  
+
+  if (frameCount % 60 == 0)
+  {
+    aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
+  }
+
   player.update();
   updateLasers();
   updateAliens();
@@ -48,7 +48,7 @@ void updateLasers()
   {
     Laser laser = lasers.get(i);
     laser.update();
-    
+
     if (laser.finished())
     {
       lasers.remove(i);
@@ -62,7 +62,7 @@ void updateAliens()
   {
     Alien alien = aliens.get(i);
     alien.update();
-    
+
     if (alien.finished())
     {
       aliens.remove(i);
@@ -74,37 +74,32 @@ void checkCollision()
 {
   for (int i = lasers.size() - 1; i >= 0; i --)
   {
-    Laser laser = lasers.get(i);
-    for (int j = aliens.size() - 1; i >= 0; i --)
+    for (int j = aliens.size() - 1; j >= 0; j --)
     {
-      Alien alien = aliens.get(i);
-      PVector d = PVector.sub(laser.pos, alien.pos);
-      float distance = d.mag();
-      
-      if (distance < 5)
-      {
-        lasers.remove(i);
-        aliens.remove(i);
-      }
-      
+      //Laser laser = lasers.get(i);
       //Alien alien = aliens.get(j);
-      //println(aliens.size());
-      ////float distance = dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x);
-      ////println(distance);
       
-      //if (dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x) <= 5)
+      //if (dist(laser.pos.x, laser.pos.y, alien.pos.x, alien.pos.y) < 15)
       //{
       //  lasers.remove(i);
       //  aliens.remove(j);
-      //  //println(distance);
       //}
+      
+      PVector d = PVector.sub(laser.pos, alien.pos);
+      float distance = d.mag();
+
+      if (distance < 10)
+      {
+        lasers.remove(i);
+        aliens.remove(j);
+      }
     }
   }
 }
 
 void mousePressed()
 {
-  lasers.add(new Laser(5));
+  lasers.add(new Laser(-5));
   //aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
   aliens.add(new Alien(mouseX, random(0, height/6), 15, 1));
 }

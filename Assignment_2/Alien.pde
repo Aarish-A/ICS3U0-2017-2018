@@ -14,7 +14,7 @@ class Alien
     fill(255);
     rectMode(CENTER);
     rect(pos.x, pos.y, size.x, size.y);
-    pos.y += vel.y;
+    pos.add(vel);
   }
   
   boolean finished()
