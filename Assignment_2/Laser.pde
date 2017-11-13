@@ -31,19 +31,26 @@ class Laser
   void levelOne()
   {
     fill(255, 0, 0);
-    rectMode(CENTER);
+    //rectMode(CENTER);
+    //rect(pos.x, pos.y, size.x, size.y);
+    
     vel.y = -5;
-    rect(pos.x, pos.y, size.x, size.y);
+    imageMode(CENTER);
+    image(laserImage, pos.x, pos.y, size.x, size.y);
     pos.add(vel);
   }
 
   void levelTwo()
   {
-    fill(255, 0, 0);
-    rectMode(CENTER);
+    //fill(255, 0, 0);
+    //rectMode(CENTER);
+    //rect(pos.x - 7, pos.y, size.x, size.y);
+    //rect(pos.x + 7, pos.y, size.x, size.y);
+
     vel.y = -5;
-    rect(pos.x - 7, pos.y, size.x, size.y);
-    rect(pos.x + 7, pos.y, size.x, size.y);
+    imageMode(CENTER);
+    image(laserImage, pos.x - 7, pos.y, size.x, size.y);
+    image(laserImage, pos.x + 7, pos.y, size.x, size.y);
     pos.add(vel);
   }
 }

@@ -10,11 +10,13 @@ class Ship
 
   void update()
   {
-    fill(255);
-    rectMode(CENTER);
+    //fill(255);
+    //rectMode(CENTER);
+    //rect(pos.x, pos.y, size.x, size.y);
 
     pos.x = mouseX;
     pos.y = mouseY;
-    rect(pos.x, pos.y, size.x, size.y);
+    imageMode(CENTER);
+    image(shipImage, pos.x, pos.y, size.x, size.y);
   }
 }

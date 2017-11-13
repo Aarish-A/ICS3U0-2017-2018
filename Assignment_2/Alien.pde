@@ -12,8 +12,11 @@ class Alien
   void update()
   {
     fill(255);
-    rectMode(CENTER);
-    rect(pos.x, pos.y, size.x, size.y);
+    //rectMode(CENTER);
+    //rect(pos.x, pos.y, size.x, size.y);
+    imageMode(CENTER);
+    image(alienImage, pos.x, pos.y, size.x, size.y);
+    
     pos.add(vel);
   }
   
