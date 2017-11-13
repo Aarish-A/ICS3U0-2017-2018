@@ -6,27 +6,41 @@
 
 int laserLevel;
 int score;
+float enemyVel;
+
+PImage shipImage;
+PImage laserImage;
+PImage alienImage;
+PImage upgradeImage;
 
 Ship player;
 
 ArrayList<Laser> lasers;
-Laser laser;
+//Laser laser;
 
 ArrayList<Alien> aliens;
-Alien alien;
+//Alien alien;
 
 ArrayList<Upgrade> upgrades;
-Upgrade upgrade;
-
+//Upgrade upgrade;
 
 void settings()
 {
-  size(1000, 600);
+  //size(1000, 600);
+  fullScreen();
 }
 
 void setup()
 {
   laserLevel = 1;
+  score = 0; 
+  enemyVel = 1;
+
+  shipImage = loadImage("spaceship.png");
+  laserImage = loadImage("laser.png");
+  alienImage = loadImage("alien.jpg");
+  upgradeImage = loadImage("upgrade.png");
+
   player = new Ship();
   lasers = new ArrayList<Laser>();
   aliens = new ArrayList<Alien>();
@@ -37,65 +51,94 @@ void setup()
 void draw()
 {
   background(0);
-  println("Aliens:", aliens.size());
-  println("Lasers:", lasers.size());
-
 
   player.update();
-  updateLasers();
-  updateAliens();
-  updateUpgrades();
-  //checkPlayerCollision();
-  checkAlienCollision();
-  checkUpgradeCollision();
-  spawnAliens();
-  spawnUpgrades();
-  showScore();
+
+  spawnObjects("lasers");
+  spawnObjects("aliens");
+  spawnObjects("upgrades");
+
+  updateObjects("lasers");
+  updateObjects("aliens");
+  updateObjects("upgrades");
+
+  checkPlayerCollision();
+  checkObjectCollision("aliens");
+  checkObjectCollision("upgrades");
+
+  showStats();
+
+  enemyVel += 0.002;
 }
 
-void updateLasers()
+void spawnObjects(String object)
 {
-  if (frameCount % 60 <= 45)
+  if (object == "lasers")
   {
-    lasers.add(new Laser());
+    if (mousePressed == true)
+    {
+      lasers.add(new Laser());
+    }
   }
 
-  for (int i = lasers.size() - 1; i >= 0; i--)
+  if (object == "aliens")
   {
-    Laser laser = lasers.get(i);
-    laser.update();
-
-    if (laser.finished())
+    if (random(0, map(enemyVel, 0.5, 10, 30, 5)) <= 1)
     {
-      lasers.remove(i);
+      aliens.add(new Alien(random(width), random(0, 0 - height/6), 30, enemyVel));
+    }
+  }
+
+  if (object == "upgrades")
+  {
+    if (random(0, 750) <= 1)
+    {
+      upgrades.add(new Upgrade(random(width), random(0, 0 - height/6), 30, enemyVel));
     }
   }
 }
 
-void updateAliens()
+void updateObjects(String object)
 {
-  for (int i = aliens.size() - 1; i >= 0; i--)
+  if (object == "lasers")
   {
-    Alien alien = aliens.get(i);
-    alien.update();
-
-    if (alien.finished())
+    for (int i = lasers.size() - 1; i >= 0; i--)
     {
-      aliens.remove(i);
+      Laser laser = lasers.get(i);
+      laser.update();
+
+      if (laser.finished())
+      {
+        lasers.remove(i);
+      }
     }
   }
-}
 
-void updateUpgrades()
-{
-  for (int i = upgrades.size() - 1; i >= 0; i--)
+  if (object == "aliens")
   {
-    Upgrade upgrade = upgrades.get(i);
-    upgrade.update();
-
-    if (upgrade.finished())
+    for (int i = aliens.size() - 1; i >= 0; i--)
     {
-      upgrades.remove(i);
+      Alien alien = aliens.get(i);
+      alien.update();
+
+      if (alien.finished())
+      {
+        aliens.remove(i);
+      }
+    }
+  }
+
+  if (object == "lasers")
+  {
+    for (int i = upgrades.size() - 1; i >= 0; i--)
+    {
+      Upgrade upgrade = upgrades.get(i);
+      upgrade.update();
+
+      if (upgrade.finished())
+      {
+        upgrades.remove(i);
+      }
     }
   }
 }
@@ -107,7 +150,7 @@ void checkPlayerCollision()
     PVector d = PVector.sub(player.pos, alien.pos);
     float distance = d.mag();
 
-    if (distance < 50)
+    if (distance < 30)
     {
       println("Game Over");
       exit();
@@ -115,92 +158,64 @@ void checkPlayerCollision()
   }
 }
 
-void checkAlienCollision()
+void checkObjectCollision(String object)
 {
   for (int i = lasers.size() - 1; i >= 0; i --)
   {
-    for (int j = aliens.size() - 1; j >= 0; j --)
+
+    if (object == "aliens")
     {
-      Laser laser = lasers.get(i);
-      Alien alien = aliens.get(j);
-      //println("Lasers:", lasers.size());
-      //println("Aliens:", aliens.size());
-
-      PVector d = PVector.sub(laser.pos, alien.pos);
-      float distance = d.mag();
-
-      if (distance < 10)
+      for (int j = aliens.size() - 1; j >= 0; j --)
       {
-        lasers.remove(i);
-        aliens.remove(j);
-        score += 1;
-      }
-    }
-  }
-}
+        Laser laser = lasers.get(i);
+        Alien alien = aliens.get(j);
 
-void checkUpgradeCollision()
-{
-  for (int i = lasers.size() - 1; i >= 0; i --)
-  {
-    for (int j = upgrades.size() - 1; j >= 0; j --)
-    {
-      Laser laser = lasers.get(i);
-      Upgrade upgrade = upgrades.get(j);
-      //println("Lasers:", lasers.size());
-      //println("Aliens:", aliens.size());
+        PVector d = PVector.sub(laser.pos, alien.pos);
+        float distance = d.mag();
 
-      PVector d = PVector.sub(laser.pos, upgrade.pos);
-      float distance = d.mag();
-
-      if (distance < 10)
-      {
-        lasers.remove(i);
-        upgrades.remove(j);
-        if (laserLevel < 2)
+        if (distance < 20)
         {
-          laserLevel += 1;
+          lasers.remove(i);
+          aliens.remove(j);
+          score += 1;
+        }
+      }
+    } 
+
+    if (object == "upgrades")
+    {
+      for (int j = upgrades.size() - 1; j >= 0; j --)
+      {
+        Laser laser = lasers.get(i);
+        Upgrade upgrade = upgrades.get(j);
+        //println("Lasers:", lasers.size());
+        //println("Aliens:", aliens.size());
+
+        PVector d = PVector.sub(laser.pos, upgrade.pos);
+        float distance = d.mag();
+
+        if (distance < 20)
+        {
+          lasers.remove(i);
+          upgrades.remove(j);
+
+          if (laserLevel < 2)
+          {
+            laserLevel += 1;
+          }
         }
       }
     }
   }
 }
 
-//void createLasers()
-//{
-//  if (frameCount % 60 <= 45)
-//  {
-//    lasers.add(new Laser());
-//  }
-//}
-
-
-void spawnAliens()
-{
-  if (frameCount % 60 <= 10)
-  {
-    aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
-  }
-}
-
-void spawnUpgrades()
-{
-  if (frameCount % 60 == 0)
-  {
-    upgrades.add(new Upgrade(random(width), random(0, height/6), 15, 1));
-  }
-}
-
-void showScore()
+void showStats()
 {
   fill(255);
   textSize(25);
-  text(score, width - 50, height - 25);
-}
-
-void mousePressed()
-{
-  //lasers.add(new Laser(-5));
-  //aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
-  //aliens.add(new Alien(mouseX, random(0, height/6), 15, 1));
+  textAlign(RIGHT);
+  image(laserImage, width - 100, height - 78, 10, 40);
+  text(laserLevel, width - 25, height - 70);
+  image(alienImage, width - 100, height - 33, 40, 40);
+  text(score, width - 25, height - 25);
 }
