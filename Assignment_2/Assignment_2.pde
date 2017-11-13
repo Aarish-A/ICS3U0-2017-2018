@@ -1,10 +1,12 @@
-/* Aarish Adeel
+/* Aarish Adeel //<>//
  * Assignment 2
  * ICS 3U0
  * 11/06/17 - 
  */
 
 int laserLevel;
+int score;
+
 Ship player;
 
 ArrayList<Laser> lasers;
@@ -35,20 +37,29 @@ void setup()
 void draw()
 {
   background(0);
+  println("Aliens:", aliens.size());
+  println("Lasers:", lasers.size());
+
 
   player.update();
   updateLasers();
   updateAliens();
   updateUpgrades();
+  //checkPlayerCollision();
   checkAlienCollision();
   checkUpgradeCollision();
-  createLasers();
   spawnAliens();
   spawnUpgrades();
+  showScore();
 }
 
 void updateLasers()
 {
+  if (frameCount % 60 <= 45)
+  {
+    lasers.add(new Laser());
+  }
+
   for (int i = lasers.size() - 1; i >= 0; i--)
   {
     Laser laser = lasers.get(i);
@@ -89,6 +100,21 @@ void updateUpgrades()
   }
 }
 
+void checkPlayerCollision()
+{
+  for (Alien alien : aliens)
+  {
+    PVector d = PVector.sub(player.pos, alien.pos);
+    float distance = d.mag();
+
+    if (distance < 50)
+    {
+      println("Game Over");
+      exit();
+    }
+  }
+}
+
 void checkAlienCollision()
 {
   for (int i = lasers.size() - 1; i >= 0; i --)
@@ -107,6 +133,7 @@ void checkAlienCollision()
       {
         lasers.remove(i);
         aliens.remove(j);
+        score += 1;
       }
     }
   }
@@ -139,13 +166,13 @@ void checkUpgradeCollision()
   }
 }
 
-void createLasers()
-{
-  if (frameCount % 60 <= 45)
-  {
-    lasers.add(new Laser());
-  }
-}
+//void createLasers()
+//{
+//  if (frameCount % 60 <= 45)
+//  {
+//    lasers.add(new Laser());
+//  }
+//}
 
 
 void spawnAliens()
@@ -162,6 +189,13 @@ void spawnUpgrades()
   {
     upgrades.add(new Upgrade(random(width), random(0, height/6), 15, 1));
   }
+}
+
+void showScore()
+{
+  fill(255);
+  textSize(25);
+  text(score, width - 50, height - 25);
 }
 
 void mousePressed()
