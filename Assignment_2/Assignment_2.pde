@@ -4,7 +4,7 @@
  * 11/06/17 - 
  */
 
-
+int laserLevel;
 Ship player;
 
 ArrayList<Laser> lasers;
@@ -12,6 +12,9 @@ Laser laser;
 
 ArrayList<Alien> aliens;
 Alien alien;
+
+ArrayList<Upgrade> upgrades;
+Upgrade upgrade;
 
 
 void settings()
@@ -21,29 +24,27 @@ void settings()
 
 void setup()
 {
+  laserLevel = 1;
   player = new Ship();
   lasers = new ArrayList<Laser>();
   aliens = new ArrayList<Alien>();
+  upgrades = new ArrayList<Upgrade>();
 }
 
 
 void draw()
 {
   background(0);
-<<<<<<< HEAD
 
-  if (frameCount % 60 == 0)
-  {
-    aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
-  }
-
-=======
-  
->>>>>>> parent of a1f8b08... Fixed exception error on collision mechanic
   player.update();
   updateLasers();
   updateAliens();
-  checkCollision();
+  updateUpgrades();
+  checkAlienCollision();
+  checkUpgradeCollision();
+  createLasers();
+  spawnAliens();
+  spawnUpgrades();
 }
 
 void updateLasers()
@@ -74,22 +75,31 @@ void updateAliens()
   }
 }
 
-void checkCollision()
+void updateUpgrades()
+{
+  for (int i = upgrades.size() - 1; i >= 0; i--)
+  {
+    Upgrade upgrade = upgrades.get(i);
+    upgrade.update();
+
+    if (upgrade.finished())
+    {
+      upgrades.remove(i);
+    }
+  }
+}
+
+void checkAlienCollision()
 {
   for (int i = lasers.size() - 1; i >= 0; i --)
   {
     for (int j = aliens.size() - 1; j >= 0; j --)
     {
-<<<<<<< HEAD
-      //Laser laser = lasers.get(i);
-      //Alien alien = aliens.get(j);
-      
-      //if (dist(laser.pos.x, laser.pos.y, alien.pos.x, alien.pos.y) < 15)
-      //{
-      //  lasers.remove(i);
-      //  aliens.remove(j);
-      //}
-      
+      Laser laser = lasers.get(i);
+      Alien alien = aliens.get(j);
+      //println("Lasers:", lasers.size());
+      //println("Aliens:", aliens.size());
+
       PVector d = PVector.sub(laser.pos, alien.pos);
       float distance = d.mag();
 
@@ -97,25 +107,66 @@ void checkCollision()
       {
         lasers.remove(i);
         aliens.remove(j);
-=======
-      Alien alien = aliens.get(j);
-      float distance = dist(laser.pos.y, laser.pos.x, alien.pos.y, alien.pos.x);
-      println(distance);
-      
-      if (distance <= 5)
-      {
-        lasers.remove(i);
-        aliens.remove(j);
-        //println(distance);
->>>>>>> parent of a1f8b08... Fixed exception error on collision mechanic
       }
     }
   }
 }
 
+void checkUpgradeCollision()
+{
+  for (int i = lasers.size() - 1; i >= 0; i --)
+  {
+    for (int j = upgrades.size() - 1; j >= 0; j --)
+    {
+      Laser laser = lasers.get(i);
+      Upgrade upgrade = upgrades.get(j);
+      //println("Lasers:", lasers.size());
+      //println("Aliens:", aliens.size());
+
+      PVector d = PVector.sub(laser.pos, upgrade.pos);
+      float distance = d.mag();
+
+      if (distance < 10)
+      {
+        lasers.remove(i);
+        upgrades.remove(j);
+        if (laserLevel < 2)
+        {
+          laserLevel += 1;
+        }
+      }
+    }
+  }
+}
+
+void createLasers()
+{
+  if (frameCount % 60 <= 45)
+  {
+    lasers.add(new Laser());
+  }
+}
+
+
+void spawnAliens()
+{
+  if (frameCount % 60 <= 10)
+  {
+    aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
+  }
+}
+
+void spawnUpgrades()
+{
+  if (frameCount % 60 == 0)
+  {
+    upgrades.add(new Upgrade(random(width), random(0, height/6), 15, 1));
+  }
+}
+
 void mousePressed()
 {
-  lasers.add(new Laser(-5));
+  //lasers.add(new Laser(-5));
   //aliens.add(new Alien(random(width), random(0, height/6), 15, 1));
-  aliens.add(new Alien(mouseX, random(0, height/6), 15, 1));
+  //aliens.add(new Alien(mouseX, random(0, height/6), 15, 1));
 }
