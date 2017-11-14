@@ -36,10 +36,10 @@ void setup()
   score = 0; 
   enemyVel = 1;
 
-  shipImage = loadImage("spaceship.png");
-  laserImage = loadImage("laser.png");
-  alienImage = loadImage("alien.jpg");
-  upgradeImage = loadImage("upgrade.png");
+  shipImage = loadImage("images/spaceship.png");
+  laserImage = loadImage("images/laser.png");
+  alienImage = loadImage("images/alien.png");
+  upgradeImage = loadImage("images/upgrade.png");
 
   player = new Ship();
   lasers = new ArrayList<Laser>();
