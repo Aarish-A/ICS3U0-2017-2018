@@ -2,11 +2,11 @@ class Alien
 {
   PVector pos, vel, size;
   
-  Alien(float _x, float _y, float _s, float _yVel)
+  Alien(float _x, float _y, float _width, float _height, float _yVel)
   {
     pos = new PVector(_x, _y);
     vel = new PVector(0, _yVel);
-    size = new PVector(_s, _s);
+    size = new PVector(_width, _height);
   }
   
   void update()
