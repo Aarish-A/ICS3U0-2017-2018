@@ -155,6 +155,7 @@ void showStats()
   fill(255);
   textSize(25);
   textAlign(RIGHT);
+  textFont(defaultFont);
   image(laserImage, width - 100, height - 78, 10, 40);
   text(laserLevel, width - 25, height - 70);
   image(alienImage, width - 100, height - 33, 40, 35);
