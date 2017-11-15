@@ -2,14 +2,14 @@ void menuScreen()
 {
   background(0);
 
-  createTitle();
-  updateButtons("START", height * 5/10);
-  updateButtons("OPTIONS", height * 6/10);
-  updateButtons("EXIT", height * 7/10);
+  createMainTitle();
+  updateMainButtons("START", height * 5/10);
+  updateMainButtons("OPTIONS", height * 6/10);
+  updateMainButtons("EXIT", height * 7/10);
 }
 
 
-void createTitle()
+void createMainTitle()
 {
   textAlign(CENTER);
   textFont(titleFont);
@@ -18,7 +18,7 @@ void createTitle()
   text("Invaders of\nSpace", width/2, height * 2.5/10);
 }
 
-void updateButtons (String button, float _h)
+void updateMainButtons (String button, float _h)
 {
   float h = _h;
   textFont(bodyFont);

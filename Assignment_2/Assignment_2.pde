@@ -11,6 +11,7 @@ float enemyVel;
 
 PFont titleFont;
 PFont bodyFont;
+PFont defaultFont;
 
 
 PImage shipImage;
@@ -46,6 +47,7 @@ void setup()
 
   titleFont = createFont("fonts/VoiceInMyHead.otf", 25);
   bodyFont = createFont("fonts/Orena.ttf", 25);
+  defaultFont = createFont("Lucida Sans", 25);
 
   shipImage = loadImage("images/spaceship.png");
   laserImage = loadImage("images/laser.png");
@@ -70,7 +72,7 @@ void draw()
       gameScreen();
       break;
     case 2:
-      //optionsScreen();
+      optionsScreen();
       break;
   }
 }
