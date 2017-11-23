@@ -8,66 +8,49 @@ PVector targetPos;
 PVector laserPos;
 PVector laserVel;
 
+void settings()
+{
+  size(600, 600);
+}
+
 void setup()
 {
   frameRate(60);
-  size(600, 600);
   rectMode(CENTER);
-
+  
   angle = 0;
-  dT = 4.0*60.0;
-
-  targetPos = new PVector(width, -height);
-  laserPos = new PVector(0, 0);
+  hyp = 0;
+  opp = 0;
+  adj = 0;
+  dT = 4.0 * 60.0;
+  
+  targetPos = new PVector(width, 0);
+  laserPos = new PVector(0, height);
   laserVel = new PVector(0, 0);
 }
 
 void draw()
 {
   background(255);
-  translate(0, height);
-
+  
   fill(0);
   strokeWeight(10);
   point(targetPos.x, targetPos.y);
-  point(0, 0);
-
+  point(0, height);
   strokeWeight(1);
-  line(targetPos.x, targetPos.y, 0, 0);
-
-  angle = atan2(0 - (laserPos.y + height), 600 - laserPos.x);
-  //angle = atan2(targetPos.y - (laserPos.y + height) , targetPos.x - laserPos.x);
-  println(mouseX, mouseY);
-  PVector d = PVector.sub(targetPos, laserPos);
-  hyp = d.mag();
-  opp = hyp * sin(angle);
-  adj = hyp * cos(angle);
-  laserVel.x = adj / dT;
-  laserVel.y = opp / dT;
-
-  println("Hyp is", hyp);
-  println("Opp is", opp);
-  println("Adj is", adj);
-  println("velX is", laserVel.x);
-  println("velY is", laserVel.y);
-  println("Pos is", laserPos.x, laserPos.y);
-
-
-
-  //if (mousePressed) angle = atan2(mouseY - laserPos.y , mouseX - laserPos.x);
-
+  line(0, height, targetPos.x, targetPos.y);
+  
+  angle = atan2(targetPos.y - laserPos.y, targetPos.x - laserPos.x);  
+  
   pushMatrix();
-  rotate(angle);
-  println("Angle is", degrees(angle));
-
+  translate(laserPos.x, laserPos.y);
+  rotate(angle + 90);
+  println(degrees(angle));
+  println(mouseX, mouseY);
+  
   fill(255, 0, 0);
-  rect(laserPos.x, laserPos.y, 10, 30);
-  //laserPos.y += laserVel.y;
-  //laserPos.x += laserVel.x;
-
+  rect(0, 0, 10, 30);
   popMatrix();
-
-  laserPos.add(laserVel);
 }
 
 
