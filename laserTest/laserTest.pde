@@ -17,13 +17,13 @@ void setup()
 {
   frameRate(60);
   rectMode(CENTER);
-  
+
   angle = 0;
   hyp = 0;
   opp = 0;
   adj = 0;
   dT = 4.0 * 60.0;
-  
+
   targetPos = new PVector(width, 0);
   laserPos = new PVector(0, height);
   laserVel = new PVector(0, 0);
@@ -32,25 +32,36 @@ void setup()
 void draw()
 {
   background(255);
-  
+
   fill(0);
   strokeWeight(10);
   point(targetPos.x, targetPos.y);
   point(0, height);
   strokeWeight(1);
   line(0, height, targetPos.x, targetPos.y);
-  
-  angle = atan2(targetPos.y - laserPos.y, targetPos.x - laserPos.x);  
-  
+
+  laserVel.y = opp / dT;
+  laserVel.x = adj / dT;
+
   pushMatrix();
-  translate(laserPos.x, laserPos.y);
-  rotate(angle + 90);
+  translate(laserPos.x, laserPos.y); 
+  rotate(angle);
   println(degrees(angle));
   println(mouseX, mouseY);
-  
+
   fill(255, 0, 0);
-  rect(0, 0, 10, 30);
+  rect(0, 0, 30, 10);
+
+  laserPos.add(laserVel);
   popMatrix();
+}
+
+void mousePressed()
+{
+  angle = atan2(targetPos.y - laserPos.y, targetPos.x - laserPos.x);
+  hyp = dist(laserPos.x, laserPos.y, targetPos.x, targetPos.y);
+  opp = hyp * sin(angle);
+  adj = hyp * cos(angle);
 }
 
 
