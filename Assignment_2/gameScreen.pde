@@ -33,7 +33,8 @@ void spawnObjects(String object)
     aliens.add(new Alien(random(width), random(0, 0 - height/6), 30, 25, enemyVel));
   }
 
-  if (object == "upgrades" && random(0, 750) <= 1)
+  //if (object == "upgrades" && random(0, 750) <= 1)
+  if (object == "upgrades" && random(0, 50) <= 1)
   {
     upgrades.add(new Upgrade(random(width), random(0, 0 - height/6), 30, enemyVel));
   }
@@ -140,7 +141,7 @@ void checkObjectCollision(String list)
           lasers.remove(i);
           upgrades.remove(j);
 
-          if (laserLevel < 2)
+          if (laserLevel < 3)
           {
             laserLevel += 1;
           }
