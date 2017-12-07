@@ -1,8 +1,11 @@
-IntList bDecValues;
-IntList iDecValues;
-IntList nDecValues;
-IntList gDecValues;
-IntList oDecValues;
+StringList bValues;
+StringList iValues;
+StringList nValues;
+StringList gValues;
+StringList oValues;
+
+String mode;
+boolean free;
 
 void settings () 
 {
@@ -11,125 +14,116 @@ void settings ()
 
 void setup() 
 {
-  background(0);
+  background(255);
+  fill(0);
   textAlign(CENTER, CENTER);
+  rectMode(CENTER);
 
-  getBingo("DECIMAL");
+  mode = "OCTAL";
+  free = true;
+
+  textSize(50);
+  text(mode + " BINGO", width/2, 75);  
+
+  getBingo(mode);
+
+  if (free)
+  {
+    fill(255);
+    noStroke();
+    rect(width/2, 350, 75, 75);
+
+    fill(0);
+    textSize(13);
+    text("FREE!", width/2, 350);
+  }
 }
 
-
-void getBingo(String _numSystem)
+void getBingo(String numSystem)
 {
-  String numSystem = _numSystem;
+  if (numSystem == "BINARY")
+  {
+    getValues(bValues, 1, 10, width / 6, numSystem);
+    getValues(iValues, 11, 20, 2 * width / 6, numSystem);
+    getValues(nValues, 21, 30, width / 2, numSystem);
+    getValues(gValues, 31, 40, 4 * width / 6, numSystem);
+    getValues(oValues, 41, 50, 5 * width / 6, numSystem);
+  }
+
+  if (numSystem == "OCTAL")
+  {
+    getValues(bValues, 1, 30, width / 6, numSystem);
+    getValues(iValues, 31, 60, 2 * width / 6, numSystem);
+    getValues(nValues, 61, 90, width / 2, numSystem);
+    getValues(gValues, 91, 120, 4 * width / 6, numSystem);
+    getValues(oValues, 121, 150, 5 * width / 6, numSystem);
+  }
 
   if (numSystem == "DECIMAL")
   {
-    getValues(bDecValues, 0, 16, width / 6);
-    getValues(iDecValues, 16, 31, 2 * width / 6);
-    getValues(nDecValues, 31, 46, width / 2);
-    getValues(gDecValues, 46, 61, 4 * width / 6);
-    getValues(oDecValues, 61, 75, 5 * width / 6);
-  } else if (numSystem == "BINARY")
+    getValues(bValues, 1, 15, width / 6, numSystem);
+    getValues(iValues, 16, 30, 2 * width / 6, numSystem);
+    getValues(nValues, 31, 45, width / 2, numSystem);
+    getValues(gValues, 46, 60, 4 * width / 6, numSystem);
+    getValues(oValues, 61, 75, 5 * width / 6, numSystem);
+  }
+
+  if (numSystem == "HEXADECIMAL")
   {
-  } else if (numSystem == "OCTAL")
-  {
-  } else if (numSystem == "HEXADECIMAL")
-  {
+    getValues(bValues, 1, 50, width / 6, numSystem);
+    getValues(iValues, 51, 100, 2 * width / 6, numSystem);
+    getValues(nValues, 101, 150, width / 2, numSystem);
+    getValues(gValues, 151, 200, 4 * width / 6, numSystem);
+    getValues(oValues, 201, 250, 5 * width / 6, numSystem);
   }
 }
 
 
-void getValues(IntList list, int _range1, int _range2, float _xPos)
+void getValues(StringList numbers, int range1, int range2, float xPos, String numSystem)
 {
-  list = new IntList();
-  int range1 = _range1;
-  int range2 = _range2;
-  float xPos = _xPos;
+  numbers = new StringList();
+  textSize(13);
 
-
-  for (int i = range1; i < range2; i++) 
+  for (int i = range1; i <= range2; i++) 
   {
-    list.append(i);
+    String temp = "";
+
+    if (numSystem == "BINARY") 
+    { 
+      temp = binary(i, 6);
+    } else if (numSystem == "OCTAL") 
+    { 
+      temp = oct(i);
+    } else if (numSystem == "DECIMAL") 
+    { 
+      temp = str(i);
+    } else if (numSystem == "HEXADECIMAL") 
+    { 
+      temp = hex(i, 4);
+    }
+
+    numbers.append(temp);
   }
 
-  list.shuffle();
+  numbers.shuffle();
 
   for (int i= 0; i < 5; i++) 
   {
-    text(list.get(i), xPos, (i*100)+150);
+    text(numbers.get(i), xPos, (i*100)+150);
   }
 }
 
+String oct(int number)
+{
+  int octal = 0;
+  int i = 1;
 
+  while (number != 0)
+  {
+    octal += number % 8 * i;
+    number /= 8;
+    i *= 10;
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-////b
-//bDecValues = new IntList();
-//for (int i = 0; i<16; i++) 
-//{
-//  bDecValues.append(i);
-//}
-//bDecValues.shuffle();
-//for (int i=0; i<5; i++) 
-//{
-//  text(bDecValues.get(i), width/6, (i*100)+150);
-//}
-
-////i
-//iDecValues = new IntList();
-//for (int i = 16; i<31; i++) 
-//{
-//  iDecValues.append(i);
-//}
-//iDecValues.shuffle();
-//for (int i=0; i<5; i++) 
-//{
-//  text(iDecValues.get(i), 2*(width/6), (i*100)+150);
-//}
-
-////n
-//nDecValues = new IntList();
-//for (int i = 31; i<46; i++) 
-//{
-//  nDecValues.append(i);
-//}
-//nDecValues.shuffle();
-//for (int i=0; i<5; i++) 
-//{
-//  text(nDecValues.get(i), width/2, (i*100)+150);
-//}
-
-////g
-//gDecValues = new IntList();
-//for (int i = 46; i<61; i++) 
-//{
-//  gDecValues.append(i);
-//}
-//gDecValues.shuffle();
-//for (int i=0; i<5; i++) 
-//{
-//  text(gDecValues.get(i), 4*(width/6), (i*100)+150);
-//}
-
-////o
-//oDecValues = new IntList();
-//for (int i = 61; i<75; i++) 
-//{
-//  oDecValues.append(i);
-//}
-//oDecValues.shuffle();
-//for (int i=0; i<5; i++) 
-//{
-//  text(oDecValues.get(i), 5*(width/6), (i*100)+150);
-//}
+  return str(octal);
+}
