@@ -1,3 +1,50 @@
+void createPDF()
+{
+  fill(0);
+
+  textSize(50);
+  text(mode + " BINGO", width/2, 75);  
+
+  getBingo(mode);
+
+  if (free)
+  {
+    fill(255);
+    noStroke();
+    rect(width/2, 350, 75, 75);
+
+    fill(0);
+    textSize(13);
+    text("FREE!", width/2, 350);
+  }
+}
+
+//PGraphicsPDF pdf = (PGraphicsPDF) g;
+
+//if (frameCount == cardNum + 1)
+//{
+//  exit();
+//} else 
+//{
+//  textSize(50);
+//  text(mode + " BINGO", width/2, 75);  
+
+//  getBingo(mode);
+
+//  if (free)
+//  {
+//    fill(255);
+//    noStroke();
+//    rect(width/2, 350, 75, 75);
+
+//    fill(0);
+//    textSize(13);
+//    text("FREE!", width/2, 350);
+//  }
+
+//  pdf.nextPage();
+//}
+
 void getBingo(String numSystem)
 {
   if (numSystem == "BINARY")
@@ -68,6 +115,7 @@ void getValues(StringList numbers, int range1, int range2, float xPos, String nu
 
   for (int i= 0; i < 5; i++) 
   {
+    fill(random(255), random(255), random(255), random(255));
     text(numbers.get(i), xPos, (i*100)+150);
   }
 }

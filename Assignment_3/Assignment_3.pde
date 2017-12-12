@@ -1,6 +1,8 @@
 import processing.pdf.*;
 int cardNum;
 
+int screenNum;
+
 StringList bValues;
 StringList iValues;
 StringList nValues;
@@ -12,47 +14,35 @@ boolean free;
 
 void settings () 
 {
-  size(600, 600, PDF, "default");
+  size(600, 600);
 }
 
 void setup() 
 {
-  background(255);
-  fill(0);
-  textAlign(CENTER, CENTER);
-  rectMode(CENTER);
-
-  mode = "BINARY";
-  free = false;
   cardNum = 10;
+  screenNum = 0;
+  mode = "DECIMAL";
+  free = false;
 }
 
 void draw()
 {
+  background(255);
+  textAlign(CENTER, CENTER);
+  rectMode(CENTER);
   
-  PGraphicsPDF pdf = (PGraphicsPDF) g;
-
-  if (frameCount == cardNum + 1)
+  switch (screenNum)
   {
-    exit();
-  } else 
-  {
-    textSize(50);
-    text(mode + " BINGO", width/2, 75);  
-
-    getBingo(mode);
-
-    if (free)
-    {
-      fill(255);
-      noStroke();
-      rect(width/2, 350, 75, 75);
-
-      fill(0);
-      textSize(13);
-      text("FREE!", width/2, 350);
-    }
-
-    pdf.nextPage();
+    case 0:
+      settingsScreen();
+      break;
+    case 1:
+      createPDF();
   }
+}
+
+void mousePressed()
+{
+  if (screenNum == 0) screenNum++;
+  else screenNum--;
 }
