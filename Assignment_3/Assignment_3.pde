@@ -1,5 +1,8 @@
 import processing.pdf.*;
-int cardNum;
+PGraphicsPDF pdf;
+int pageNum;
+int totalPages;
+boolean record;
 
 int screenNum;
 
@@ -19,8 +22,11 @@ void settings ()
 
 void setup() 
 {
-  cardNum = 10;
-  screenNum = 0;
+  pageNum = 0;
+  totalPages = 10;
+  record = false;
+  
+  screenNum = 1;
   mode = "DECIMAL";
   free = false;
 }
@@ -43,6 +49,8 @@ void draw()
 
 void mousePressed()
 {
-  if (screenNum == 0) screenNum++;
-  else screenNum--;
+  //if (screenNum == 0) screenNum++;
+  //else screenNum--;
+  
+  record = !record;
 }
