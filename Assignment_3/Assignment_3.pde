@@ -26,7 +26,7 @@ void setup()
   totalPages = 10;
   record = false;
   
-  screenNum = 1;
+  screenNum = 0;
   mode = "DECIMAL";
   free = false;
 }
@@ -48,9 +48,12 @@ void draw()
 }
 
 void mousePressed()
-{
-  //if (screenNum == 0) screenNum++;
-  //else screenNum--;
-  
+{ 
   record = !record;
+}
+
+void keyPressed()
+{
+  if (screenNum == 0) screenNum++;
+  else screenNum --;
 }

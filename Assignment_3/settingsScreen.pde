@@ -1,32 +1,27 @@
 void settingsScreen()
 {
-  updateOptionsButtons("Binary", width - 15, 50);
-  updateOptionsButtons("Octal", width - 15, 100);
-  updateOptionsButtons("Decimal", width - 15, 150);
-  updateOptionsButtons("Hexadecimal", width - 15, 200);
+  menuText("Choose your number system:", 40, height * 1/20);
+  updateOptionsButtons("Binary", 80, height * 1/7);
+  updateOptionsButtons("Octal", 195, height * 1/7);
+  updateOptionsButtons("Decimal", 320, height * 1/7);
+  updateOptionsButtons("Hexadecimal", 485, height * 1/7);
+}
+
+void menuText(String text, float x, float y)
+{
+  textAlign(LEFT, CENTER);
+  fill(0);
+  text(text, x, y);
 }
 
 void updateOptionsButtons (String button, float x, float y)
 {
-  textSize(20);
-  textAlign(RIGHT);
+  fill(190);
+  rectMode(CENTER);
+  rect(x, y, button.length() * 15, 50);
 
+  textSize(20);
+  textAlign(CENTER, CENTER);
   fill(0);
   text(button, x, y);
 }
-
-
-
-
-//if (dist(mouseX, mouseY, width/2, h) < button.length() * 7 && mousePressed == true)
-//{
-//  if (button == "SHIP TYPE") screenNum = 0;
-//  else if (button == "LASER COLOUR") screenNum = 0;
-//  else if (button == "BACK") screenNum = 0;
-//} else if (dist(mouseX, mouseY, width/2, h) < button.length() * 7)
-//{
-//  fill(#02EA0B);
-//} else 
-//{
-//  fill(255);
-//}
