@@ -1,17 +1,26 @@
-import processing.pdf.*;
-PGraphicsPDF pdf;
-int pageNum;
-int totalPages;
-boolean record;
+/* Aarish Adeel & Matthew How
+ * Assignment 3
+ * ICS 3U0
+ * 12/01/17 - 
+ */
 
+import processing.pdf.*;
+
+//GLOBAL VARIABLES
 int screenNum;
 
+//PDF EXPORT VARIABLES
+PGraphicsPDF pdf;
+int pageNum;
+int maxPages;
+boolean recording;
+
+//BINGO TABLE CREATION VARIABLES  
 StringList bValues;
 StringList iValues;
 StringList nValues;
 StringList gValues;
 StringList oValues;
-
 String mode;
 boolean free;
 
@@ -22,34 +31,35 @@ void settings ()
 
 void setup() 
 {
+  //GLOBAL SETUP
+  screenNum = 1;
+
+  //PDF EXPORT SETUP
   pageNum = 0;
-  totalPages = 10;
-  record = false;
-  
-  screenNum = 0;
+  maxPages = 10;
+  recording = false;
+
+  //BINGO TABLE SETUP
   mode = "DECIMAL";
   free = false;
 }
 
 void draw()
 {
-  background(255);
-  textAlign(CENTER, CENTER);
-  rectMode(CENTER);
-  
+  //Display screen based on screenNum
   switch (screenNum)
   {
-    case 0:
-      settingsScreen();
-      break;
-    case 1:
-      createPDF();
+  case 0:
+    settingsScreen();
+    break;
+  case 1:
+    createPDF();
   }
 }
 
 void mousePressed()
 { 
-  record = !record;
+  recording = !recording;
 }
 
 void keyPressed()
