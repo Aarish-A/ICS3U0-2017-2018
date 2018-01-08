@@ -1,5 +1,6 @@
 class Upgrade
 {
+  //Upgrade object properties
   PVector pos, vel, size;
 
   Upgrade(float _x, float _y, float _s, float _yVel)
@@ -9,17 +10,15 @@ class Upgrade
     size = new PVector(_s, _s);
   }
 
+  //Draws and updates upgrades based on its coordinates and velocity
   void update()
   {
-    //fill(#FA9A1C);
-    //rectMode(CENTER);
-    //rect(pos.x, pos.y, size.x, size.y);
-
     imageMode(CENTER);
     image(upgradeImage, pos.x, pos.y, size.x, size.y);
     pos.add(vel);
   }
 
+  //Checks to see if the upgrade is off the screen to delete it ("finished")
   boolean finished()
   {
     if ((pos.y - (size.y / 2)) > height) return true;

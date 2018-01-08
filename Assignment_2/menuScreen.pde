@@ -1,14 +1,16 @@
+//Screen for startup menu screen
 void menuScreen()
 {
   background(0);
 
+  //Draws and updates menu elements
   createMainTitle();
   updateMainButtons("START", height * 5/10);
   updateMainButtons("OPTIONS", height * 6/10);
   updateMainButtons("EXIT", height * 7/10);
 }
 
-
+//Creates main title text
 void createMainTitle()
 {
   textAlign(CENTER);
@@ -18,6 +20,7 @@ void createMainTitle()
   text("Invaders of\nSpace", width/2, height * 2.5/10);
 }
 
+//Draws and updates menu buttons, highlights if you hover over it, takes you to appropriate screen when pressed
 void updateMainButtons (String button, float _h)
 {
   float h = _h;

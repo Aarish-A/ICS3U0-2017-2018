@@ -1,5 +1,6 @@
 class Ship
 {
+  //Ship properties
   PVector pos, size;
 
   Ship()
@@ -8,12 +9,9 @@ class Ship
     size = new PVector(50, 50);
   }
 
+  //Draws and updates ship based on mouser coordinates
   void update()
   {
-    //fill(255);
-    //rectMode(CENTER);
-    //rect(pos.x, pos.y, size.x, size.y);
-
     pos.x = mouseX;
     pos.y = mouseY;
     imageMode(CENTER);
