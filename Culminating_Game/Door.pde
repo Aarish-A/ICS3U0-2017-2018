@@ -1,0 +1,6 @@
+class Door
+{
+  Door()
+  {
+  }
+}
