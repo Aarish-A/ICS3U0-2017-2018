@@ -21,21 +21,34 @@ class Char
   {
     rectMode(CORNERS);
     rect(pos.x - size.x/2, pos.y - size.y, pos.x + size.x/2, pos.y);
-
-    if (grounded)
+    
+    if (!grounded)
+    {
+      accel.y += 0.1;
+    } 
+    else if (grounded)
     {
       accel.y = 0;
-      //vel.y = 0;
-    } else 
-    {
-      accel.y = -3;
+      vel.y = 0;
     }
-
-    vel.y += accel.y;
-    pos.y -= accel.y;
+    
+    vel.add(accel);
+    pos.add(vel);
+    //vel.y += accel.y;
+    //pos.y -= vel.y;
   }
   
   void checkGrounded()
   {
+    if (pos.y >= height)
+    {
+      grounded = true;
+      pos.y = height;
+    }
+  }
+  
+  void checkBreak()
+  {
+    if (accel.x > 0) {}
   }
 }

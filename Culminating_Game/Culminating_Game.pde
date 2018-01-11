@@ -22,17 +22,22 @@ void draw()
   
   c.update();
   c.checkGrounded();
-  
-  println(c.pos.y);
-  println(c.vel.y);
-  println(c.accel.y);
+  c.checkBreak();
 }
 
 void keyPressed()
-{
+{ 
   if (keyCode == UP)
   {
-    c.vel.y = 1000;
+    c.accel.y = -1;
     c.grounded = false;
+  }
+  else if (keyCode == RIGHT)
+  {
+    c.accel.x = 0.1;
+  }
+  else if (keyCode == LEFT)
+  {
+    c.accel.x = -0.1;
   }
 }
