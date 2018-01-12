@@ -3,12 +3,18 @@
  * ICS 3U0
  * 01/08/18 - 
  */
- 
+
+float startTime;
+
 Char c;
+
+boolean rightPressed;
+boolean leftPressed;
+boolean upPressed;
 
 void settings()
 {
-  size(1000, 600);  
+  size(1000, 600);
 }
 
 void setup()
@@ -19,25 +25,36 @@ void setup()
 void draw()
 {
   background(255);
-  
+
   c.update();
   c.checkGrounded();
-  c.checkBreak();
+  c.moveRight();
+
+  //if (keyPressed)
+  //{
+
+  //  if (rightPressed) c.pos.x += 5;
+  //  else if (leftPressed) c.pos.x -=5;
+
+  //  if (upPressed && c.grounded)
+  //  {
+  //    c.accel.y = -1;
+  //    c.grounded = false;
+  //  }
+  //}
 }
 
+
 void keyPressed()
-{ 
-  if (keyCode == UP)
-  {
-    c.accel.y = -1;
-    c.grounded = false;
-  }
-  else if (keyCode == RIGHT)
-  {
-    c.accel.x = 0.1;
-  }
-  else if (keyCode == LEFT)
-  {
-    c.accel.x = -0.1;
-  }
+{
+  if (keyCode == RIGHT) rightPressed = true;
+  if (keyCode == LEFT) leftPressed = true;
+  if (keyCode == UP) upPressed = true;
+}
+
+void keyReleased()
+{
+  if (keyCode == RIGHT) rightPressed = false;
+  if (keyCode == LEFT) leftPressed = false;
+  if (keyCode == UP) upPressed = false;
 }

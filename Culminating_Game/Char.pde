@@ -7,6 +7,9 @@ class Char
 
   boolean grounded;
 
+  float startTimer;
+  float runTimer;
+
   Char(float xPos, float yPos, float xSize, float ySize)
   {
     pos = new PVector(xPos, yPos);
@@ -15,29 +18,45 @@ class Char
     size = new PVector(xSize, ySize);
 
     grounded = false;
+
+    startTimer = frameCount;
   }
 
   void update()
   {
     rectMode(CORNERS);
     rect(pos.x - size.x/2, pos.y - size.y, pos.x + size.x/2, pos.y);
-    
+
     if (!grounded)
     {
       accel.y += 0.1;
-    } 
-    else if (grounded)
+    } else if (grounded)
     {
       accel.y = 0;
       vel.y = 0;
     }
-    
+
     vel.add(accel);
     pos.add(vel);
-    //vel.y += accel.y;
-    //pos.y -= vel.y;
   }
-  
+
+  void moveRight()
+  { 
+    if (rightPressed && !leftPressed)
+    {
+      runTimer = (frameCount - startTimer) / 60;
+      if (runTimer < 0.5) accel.x = 0.1;
+      else accel.x = 0; 
+      vel.x = 5;
+    } else 
+    {
+      vel.x = 0;
+    }
+    
+    println(startTimer);
+    println(runTimer);
+  }
+
   void checkGrounded()
   {
     if (pos.y >= height)
@@ -45,10 +64,5 @@ class Char
       grounded = true;
       pos.y = height;
     }
-  }
-  
-  void checkBreak()
-  {
-    if (accel.x > 0) {}
   }
 }
