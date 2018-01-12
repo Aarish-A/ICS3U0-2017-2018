@@ -28,27 +28,25 @@ void draw()
 
   c.update();
   c.checkGrounded();
-  c.moveRight();
-
-  //if (keyPressed)
-  //{
-
-  //  if (rightPressed) c.pos.x += 5;
-  //  else if (leftPressed) c.pos.x -=5;
-
-  //  if (upPressed && c.grounded)
-  //  {
-  //    c.accel.y = -1;
-  //    c.grounded = false;
-  //  }
-  //}
+  c.jump();
+  c.moveLateral(leftPressed, rightPressed);
 }
 
 
 void keyPressed()
 {
-  if (keyCode == RIGHT) rightPressed = true;
-  if (keyCode == LEFT) leftPressed = true;
+  if (keyCode == RIGHT && !rightPressed) 
+  {
+    rightPressed = true; 
+    c.charTimer = frameCount;
+  }
+  
+  if (keyCode == LEFT && !leftPressed)
+  {
+    leftPressed = true;
+    c.charTimer = frameCount;
+  }
+  
   if (keyCode == UP) upPressed = true;
 }
 

@@ -7,8 +7,7 @@ class Char
 
   boolean grounded;
 
-  float startTimer;
-  float runTimer;
+  float charTimer;
 
   Char(float xPos, float yPos, float xSize, float ySize)
   {
@@ -19,7 +18,7 @@ class Char
 
     grounded = false;
 
-    startTimer = frameCount;
+    charTimer = frameCount;
   }
 
   void update()
@@ -40,21 +39,37 @@ class Char
     pos.add(vel);
   }
 
-  void moveRight()
+  void moveLateral(boolean leftPressed, boolean rightPressed)
   { 
-    if (rightPressed && !leftPressed)
+    if (leftPressed || rightPressed)
     {
-      runTimer = (frameCount - startTimer) / 60;
-      if (runTimer < 0.5) accel.x = 0.1;
-      else accel.x = 0; 
-      vel.x = 5;
+      float runTimer = (frameCount - charTimer) / 60;
+
+      if (runTimer < 0.5)
+      {
+        if (rightPressed) accel.x = 0.2;
+        if (leftPressed) accel.x = -0.2;
+      } else 
+      {
+        accel.x = 0;
+        
+        if (rightPressed) vel.x = 6;
+        if (leftPressed) vel.x = -6;
+      }
     } else 
     {
+      accel.x = 0;
       vel.x = 0;
     }
-    
-    println(startTimer);
-    println(runTimer);
+  }
+
+  void jump()
+  {
+    if (upPressed && grounded)
+    {
+      accel.y = -1;
+      grounded = false;
+    }
   }
 
   void checkGrounded()
