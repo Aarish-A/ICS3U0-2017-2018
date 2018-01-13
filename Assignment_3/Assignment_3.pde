@@ -32,7 +32,7 @@ void settings ()
 void setup() 
 {
   //GLOBAL SETUP
-  screenNum = 1;
+  screenNum = 0;
 
   //PDF EXPORT SETUP
   pageNum = 0;
@@ -62,8 +62,8 @@ void mousePressed()
   recording = !recording;
 }
 
-void keyPressed()
-{
-  if (screenNum == 0) screenNum++;
-  else screenNum --;
-}
+//void keyPressed()
+//{
+//  if (screenNum == 0) screenNum++;
+//  else screenNum --;
+//}

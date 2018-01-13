@@ -47,6 +47,7 @@ void createPDF()
       } 
     } 
     endRecord();
+    exit();
   }
 }
 
