@@ -49,7 +49,7 @@ class Char
     pos.add(vel);
   }
 
-  void moveLateral(boolean leftPressed, boolean rightPressed)
+  void moveLateral()
   { 
     if (leftPressed || rightPressed)
     {

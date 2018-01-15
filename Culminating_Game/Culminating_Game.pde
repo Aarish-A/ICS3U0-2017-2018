@@ -12,6 +12,7 @@ ArrayList<Platform> platforms;
 boolean rightPressed;
 boolean leftPressed;
 boolean upPressed;
+boolean downPressed;
 
 void settings()
 {
@@ -20,9 +21,21 @@ void settings()
 
 void setup()
 {
+  frameRate(60);
+
   c = new Char(width/2, height, 10, 40);
   platforms = new ArrayList<Platform>();
-  platforms.add(new Platform(width/2, height - 80, 50, 10));
+
+  for (int i = 0; i < 5; i++)
+  {
+    //float x = random(100, width - 100);
+    //float y = random(height - 100, height - 50);
+    //platforms.add(new Platform(x, y, 50, 10));
+    
+    platforms.add(new Platform(width * i/5 + 100, height - 80, 50, 10));
+  }
+
+  //platforms.add(new Platform(width/2, height - 80, 50, 10));
 }
 
 void draw()
@@ -32,27 +45,21 @@ void draw()
   c.update();
   c.checkGrounded();
   c.jump();
-  c.moveLateral(leftPressed, rightPressed);
+  c.moveLateral();
+
+  //for (int i = platforms.size() - 1; i >= 0; i--) 
+  //{
+  //  Platform p = platforms.get(i);
+  //  p.update();
+  //  p.checkPlayerCollision();
+  //}
 
   for (Platform p : platforms)
   {
     p.update();
-
-    if (abs(c.bottomLeftCorner.x - p.bottomLeftCorner.x) < (p.size.x - c.size.x) && abs(c.bottomRightCorner.x - p.bottomRightCorner.x) < (p.size.x - c.size.x)
-      && abs(p.pos.y - c.pos.y) < 3)
-      {
-        c.pos.y = p.pos.y;
-        c.grounded = true;
-        println("yeet");
-      }
-      else if (c.pos.y < height)
-      {
-        c.grounded = false;
-        println("neet");
-      }
+    p.checkPlayerCollision();
   }
 }
-
 
 void keyPressed()
 {
@@ -69,6 +76,7 @@ void keyPressed()
   }
 
   if (keyCode == UP) upPressed = true;
+  if (keyCode == DOWN) downPressed = true;
 }
 
 void keyReleased()
@@ -76,4 +84,5 @@ void keyReleased()
   if (keyCode == RIGHT) rightPressed = false;
   if (keyCode == LEFT) leftPressed = false;
   if (keyCode == UP) upPressed = false;
+  if (keyCode == DOWN) downPressed = false;
 }
