@@ -19,7 +19,7 @@ void settings()
 
 void setup()
 {
-  c = new Char(width/2, height/2, 10, 40);
+  c = new Char(width/2, height, 10, 40);
 }
 
 void draw()
@@ -40,13 +40,13 @@ void keyPressed()
     rightPressed = true; 
     c.charTimer = frameCount;
   }
-  
+
   if (keyCode == LEFT && !leftPressed)
   {
     leftPressed = true;
     c.charTimer = frameCount;
   }
-  
+
   if (keyCode == UP) upPressed = true;
 }
 

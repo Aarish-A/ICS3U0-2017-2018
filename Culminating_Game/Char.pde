@@ -16,7 +16,7 @@ class Char
     accel = new PVector(0, 0);
     size = new PVector(xSize, ySize);
 
-    grounded = false;
+    grounded = true;
 
     charTimer = frameCount;
   }
@@ -67,7 +67,7 @@ class Char
   {
     if (upPressed && grounded)
     {
-      accel.y = -1;
+      accel.y = -1.3;
       grounded = false;
     }
   }
