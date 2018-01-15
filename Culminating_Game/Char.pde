@@ -5,6 +5,11 @@ class Char
   PVector accel;
   PVector size;
 
+  PVector topLeftCorner;
+  PVector bottomLeftCorner;
+  PVector topRightCorner;
+  PVector bottomRightCorner;
+
   boolean grounded;
 
   float charTimer;
@@ -23,8 +28,13 @@ class Char
 
   void update()
   {
+    topLeftCorner = new PVector(pos.x - size.x/2, pos.y - size.y);
+    bottomLeftCorner = new PVector(pos.x - size.x/2, pos.y);
+    topRightCorner = new PVector(pos.x + size.x/2, pos.y - size.y);
+    bottomRightCorner = new PVector(pos.x + size.x/2, pos.y);
+
     rectMode(CORNERS);
-    rect(pos.x - size.x/2, pos.y - size.y, pos.x + size.x/2, pos.y);
+    rect(topLeftCorner.x, topLeftCorner.y, bottomRightCorner.x, bottomRightCorner.y);
 
     if (!grounded)
     {
@@ -52,7 +62,7 @@ class Char
       } else 
       {
         accel.x = 0;
-        
+
         if (rightPressed) vel.x = 6;
         if (leftPressed) vel.x = -6;
       }

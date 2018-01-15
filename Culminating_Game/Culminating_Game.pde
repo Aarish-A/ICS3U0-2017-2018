@@ -7,6 +7,7 @@
 float startTime;
 
 Char c;
+ArrayList<Platform> platforms; 
 
 boolean rightPressed;
 boolean leftPressed;
@@ -20,6 +21,8 @@ void settings()
 void setup()
 {
   c = new Char(width/2, height, 10, 40);
+  platforms = new ArrayList<Platform>();
+  platforms.add(new Platform(width/2, height - 80, 50, 10));
 }
 
 void draw()
@@ -30,6 +33,24 @@ void draw()
   c.checkGrounded();
   c.jump();
   c.moveLateral(leftPressed, rightPressed);
+
+  for (Platform p : platforms)
+  {
+    p.update();
+
+    if (abs(c.bottomLeftCorner.x - p.bottomLeftCorner.x) < (p.size.x - c.size.x) && abs(c.bottomRightCorner.x - p.bottomRightCorner.x) < (p.size.x - c.size.x)
+      && abs(p.pos.y - c.pos.y) < 3)
+      {
+        c.pos.y = p.pos.y;
+        c.grounded = true;
+        println("yeet");
+      }
+      else if (c.pos.y < height)
+      {
+        c.grounded = false;
+        println("neet");
+      }
+  }
 }
 
 
