@@ -34,12 +34,17 @@ class Platform
     if (((c.bottomLeftCorner.x > topLeftCorner.x && c.bottomLeftCorner.x < topRightCorner.x) ||
       (c.bottomRightCorner.x > topLeftCorner.x && c.bottomRightCorner.x < topRightCorner.x)) &&
       abs(c.pos.y - (pos.y - size.y)) < 3 && c.vel.y > 0 && !downPressed)
+      //if (((c.bottomLeftCorner.x > topLeftCorner.x && c.bottomLeftCorner.x < topRightCorner.x) ||
+      //  (c.bottomRightCorner.x > topLeftCorner.x && c.bottomRightCorner.x < topRightCorner.x)) &&
+      //  abs(c.pos.y - (pos.y - size.y)) < 3 && c.vel.y > 0 && !downPressed)
     {
       c.pos.y = pos.y - size.y;
       c.grounded = true;
+      println("yeet");
     } else if (c.pos.y < height)
     {
       c.grounded = false;
+      println("neet");
     }
   }
 }
