@@ -4,15 +4,22 @@
  * 01/08/18 - 
  */
 
+int screenNum;
 float startTime;
-
-Char c;
-ArrayList<Platform> platforms; 
+float gameTimer;
+int numOfKeys;
 
 boolean rightPressed;
 boolean leftPressed;
 boolean upPressed;
 boolean downPressed;
+
+Char c;
+Door d;
+ArrayList<Platform> platforms;
+ArrayList<KeyPart> keyParts;
+
+
 
 void settings()
 {
@@ -23,47 +30,51 @@ void setup()
 {
   frameRate(60);
 
+  screenNum = 4;
+  startTime = frameCount;
+  numOfKeys = 0;
+
+  rightPressed = false;
+  leftPressed = false;
+  upPressed = false;
+  downPressed = false;
+
   c = new Char(width/2, height, 10, 40);
+  d = new Door(width * 4/5 + 100, height - 90, 30, 60);
   platforms = new ArrayList<Platform>();
+  keyParts = new ArrayList<KeyPart>();
 
   for (int i = 0; i < 5; i++)
   {
-    //float x = random(100, width - 100);
-    //float y = random(height - 100, height - 50);
-    //platforms.add(new Platform(x, y, 50, 10));
-
     platforms.add(new Platform(width * i/5 + 100, height - 80, 50, 10));
+    if (i < 4) keyParts.add(new KeyPart(width * i/5 + 100, height - 110, 10, 10));
   }
-
   //platforms.add(new Platform(width/2, height - 80, 50, 10));
 }
 
 void draw()
 {
-  background(255);
-
-  c.update();
-  c.checkGrounded();
-  c.jump();
-  c.moveLateral();
-
-  for (int i = platforms.size() - 1; i >= 0; i--) 
+  switch (screenNum)
   {
-    Platform p = platforms.get(i);
-    p.update();
-    p.checkPlayerCollision();
-
-    //if (c.pos.x > p.pos.x - 20 && c.pos.x < p.pos.x + 20) p.size.y = 50;
-    //else p.size.y = 5;
-    
-    //println(p.topLeftCorner, p.topRightCorner, ",");
+    case 0:
+      instructOne();
+      break;
+    case 1:
+      instructTwo();
+      break;
+    case 2:
+      instructThree();
+      break;
+    case 3:
+      instructFour();
+      break;
+    case 4:
+      gameScreen();
+      break;
+    case 5:
+      endScreen();
+      break;
   }
-
-  //for (Platform p : platforms)
-  //{
-  //  p.update();
-  //  p.checkPlayerCollision();
-  //}
 }
 
 void keyPressed()
@@ -82,6 +93,8 @@ void keyPressed()
 
   if (keyCode == UP) upPressed = true;
   if (keyCode == DOWN) downPressed = true;
+  
+  if (keyCode == ENTER && screenNum == 5) exit();
 }
 
 void keyReleased()
