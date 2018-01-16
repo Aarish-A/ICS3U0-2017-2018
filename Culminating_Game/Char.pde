@@ -34,6 +34,7 @@ class Char
     bottomRightCorner = new PVector(pos.x + size.x/2, pos.y);
 
     rectMode(CORNERS);
+    fill(255);
     rect(topLeftCorner.x, topLeftCorner.y, bottomRightCorner.x, bottomRightCorner.y);
 
     if (!grounded)
@@ -49,8 +50,23 @@ class Char
     pos.add(vel);
   }
 
-  void moveLateral()
+  void checkGrounded()
+  {
+    if (pos.y >= height)
+    {
+      grounded = true;
+      pos.y = height;
+    }
+  }
+
+  void checkMovement()
   { 
+    if (upPressed && grounded)
+    {
+      accel.y = -1.3;
+      grounded = false;
+    }
+
     if (leftPressed || rightPressed)
     {
       float runTimer = (frameCount - charTimer) / 60;
@@ -70,24 +86,6 @@ class Char
     {
       accel.x = 0;
       vel.x = 0;
-    }
-  }
-
-  void jump()
-  {
-    if (upPressed && grounded)
-    {
-      accel.y = -1.3;
-      grounded = false;
-    }
-  }
-
-  void checkGrounded()
-  {
-    if (pos.y >= height)
-    {
-      grounded = true;
-      pos.y = height;
     }
   }
 }
