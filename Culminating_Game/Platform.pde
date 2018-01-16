@@ -25,6 +25,7 @@ class Platform
 
   void update()
   {
+    fill(255);
     rectMode(CORNERS);
     rect(pos.x - size.x/2, pos.y - size.y, pos.x + size.x/2, pos.y);
   }
