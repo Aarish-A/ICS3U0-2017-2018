@@ -4,21 +4,25 @@
  * 01/08/18 - 
  */
 
+//GLOBAL VARIABLES
 int screenNum;
 float startTime;
-float gameTimer;
-int numOfKeys;
-int numOfPlatforms;
 
 boolean rightPressed;
 boolean leftPressed;
 boolean upPressed;
 boolean downPressed;
 
+//INSTRUCTION SCREEN VARIABLES
 PImage instructions_screen_1;
 PImage instructions_screen_2;
 PImage instructions_screen_3;
 PImage instructions_screen_4;
+
+//GAME SCREEN VARIABLES
+float gameTimer;
+int numOfKeys;
+int numOfPlatforms;
 
 Char c;
 Door d;
@@ -34,26 +38,35 @@ void setup()
 {
   frameRate(60);
 
+  //GLOBAL VARIABLES
   screenNum = 4;
   startTime = frameCount;
-  numOfKeys = 0;
-  numOfPlatforms = 10;
 
-  rightPressed = false;
-  leftPressed = false;
-  upPressed = false;
-  downPressed = false;
+  rightPressed = false; // A key held down is registered as multiple presses using the 
+  leftPressed = false;  // void keyPressed() function, so separate variables are created
+  upPressed = false;    // to validate when the key is pressed, then immediately after switch
+  downPressed = false;  // them to an "off" state so they are not registered again while held down
 
+  //INSTRUCTION SCREEN VARIABLES
   instructions_screen_1 = loadImage("images/instructions_screen_1.png");
   instructions_screen_2 = loadImage("images/instructions_screen_2.png");
   instructions_screen_3 = loadImage("images/instructions_screen_3.png");
   instructions_screen_4 = loadImage("images/instructions_screen_4.png");
+
+  //GAME SCREEN VARIABLES
+  numOfKeys = 0;
+  numOfPlatforms = 10;
 
   c = new Char(width/2, height, 10, 40);
   d = new Door(width * 4/5 + 100, height - 90, 30, 60);
   platforms = new ArrayList<Platform>();
   keyParts = new ArrayList<KeyPart>();
 
+  /* This randomizes the locations of and creates the platforms in a random way
+   * the randomization is based off of the last created platform so that the player is not 
+   * stuck in a situation where they are unable to reach the next platform 
+   */
+   
   float[] x = new float[numOfPlatforms]; 
   float[] y = new float[numOfPlatforms];
 
@@ -87,6 +100,7 @@ void setup()
 
 void draw()
 {
+  //Switch to control different screens
   switch (screenNum)
   {
   case 0:

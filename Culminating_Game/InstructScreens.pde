@@ -1,3 +1,4 @@
+//First instructions screen
 void instructOne()
 {
   background(255);
@@ -7,6 +8,7 @@ void instructOne()
   instructionArrows();
 }
 
+//Second instructions screen
 void instructTwo()
 {
   background(255);
@@ -16,6 +18,7 @@ void instructTwo()
   instructionArrows();
 }
 
+//Third instructions screen
 void instructThree()
 {
   background(255);
@@ -25,6 +28,7 @@ void instructThree()
   instructionArrows();
 }
 
+//Fourth instructions screen
 void instructFour()
 {
   background(255);
@@ -34,6 +38,8 @@ void instructFour()
   instructionArrows();
 }
 
+//This function updates and draws arrows to navigate between instruction pages 
+//based on what instructions screen is currently shown
 void instructionArrows()
 {
   fill(0);
@@ -49,9 +55,10 @@ void instructionArrows()
     rect(width / 2, height - 50, 50, 50);
 }
 
+//Function increments or decrements the screen count based on how far the mouse button
+//is pressed from the center of the triangle and what the current instructions screen is
 void mousePressed()
 {
-
   if (dist(mouseX, mouseY, width - 75, height - 50) < 50 && screenNum < 3) screenNum ++;
   else if (dist(mouseX, mouseY, 75, height - 50) < 50 && screenNum > 0) screenNum --;
   else if (dist(mouseX, mouseY, width / 2, height - 50) < 50 && screenNum == 3) screenNum ++;

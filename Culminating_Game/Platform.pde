@@ -1,5 +1,6 @@
 class Platform
 {
+  //OBJECT PROPERTIES
   PVector pos;
   PVector vel;
   PVector accel;
@@ -12,6 +13,7 @@ class Platform
 
   Platform(float xPos, float yPos, float xSize, float ySize)
   {
+    //OBJECT PROPERTIES
     pos = new PVector(xPos, yPos);
     vel = new PVector(0, 0);
     accel = new PVector(0, 0);
@@ -23,6 +25,7 @@ class Platform
     bottomRightCorner = new PVector(pos.x + size.x/2, pos.y);
   }
 
+  //Updates and draws the platform object
   void update()
   {
     fill(255);
@@ -30,6 +33,10 @@ class Platform
     rect(pos.x - size.x/2, pos.y - size.y, pos.x + size.x/2, pos.y);
   }
 
+  //Grounds the character to the platform if the character is within
+  //a certain range on top of the platform, above the platform, falling down, and
+  //the down button is not pressed (therefore pressing down would drop the character
+  //from the platform
   void checkPlayerCollision()
   {
     if (abs(c.bottomLeftCorner.x - topLeftCorner.x) < size.x && 

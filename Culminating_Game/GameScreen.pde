@@ -9,10 +9,13 @@ void gameScreen()
   c.checkGrounded();
   c.checkMovement();
 
+  //Loops through all the key parts in its array list
   for (int i = keyParts.size() - 1; i >= 0; i--)
   {
     KeyPart k = keyParts.get(i);
     k.update();
+    
+    //Key part is deleted and added to the players key part count if collision occurs
     if (k.checkPlayerCollision())
     {  
       keyParts.remove(i);
@@ -20,6 +23,7 @@ void gameScreen()
     }
   }
 
+  //Loops through all the platforms in its array list
   for (Platform p : platforms)
   {
     p.update();
@@ -46,6 +50,7 @@ void gameScreen()
   }
 }
 
+//Updates and draws game statistics (time passed, number of keys collected)
 void updateStats()
 {
   gameTimer = (frameCount - startTime) / 60;
@@ -57,6 +62,8 @@ void updateStats()
   text(numOfKeys + " / 4", width - 20, 60);
 }
 
+//Constantly checks for if the game timer has reached more than  
+//60 seconds in which the game ends
 void checkGameTimer()
 {
   if (gameTimer >= 60) screenNum ++;
