@@ -8,6 +8,7 @@ int screenNum;
 float startTime;
 float gameTimer;
 int numOfKeys;
+int numOfPlatforms;
 
 boolean rightPressed;
 boolean leftPressed;
@@ -24,8 +25,6 @@ Door d;
 ArrayList<Platform> platforms;
 ArrayList<KeyPart> keyParts;
 
-
-
 void settings()
 {
   size(1000, 600);
@@ -35,9 +34,10 @@ void setup()
 {
   frameRate(60);
 
-  screenNum = 0;
+  screenNum = 4;
   startTime = frameCount;
   numOfKeys = 0;
+  numOfPlatforms = 10;
 
   rightPressed = false;
   leftPressed = false;
@@ -54,11 +54,34 @@ void setup()
   platforms = new ArrayList<Platform>();
   keyParts = new ArrayList<KeyPart>();
 
-  for (int i = 0; i < 5; i++)
+  float[] x = new float[numOfPlatforms]; 
+  float[] y = new float[numOfPlatforms];
+
+  for (int i = 0; i < numOfPlatforms; i++)
   {
-    platforms.add(new Platform(width * i/5 + 100, height - 80, 50, 10));
-    if (i < 4) keyParts.add(new KeyPart(width * i/5 + 100, height - 110, 10, 10));
+    if (i == 0)
+    {
+      x[i] = random(50, 150);
+      y[i] = height - 100;
+    } else 
+    {
+      //if (i % 2 == 0) x[i] = random(x[0] - width / 2, x[0]);
+      //else x[i] = random(x[0], x[0] + width / 2);
+      
+      x[i] = random(x[i - 1] - 75, x[i - 1] + 250);
+      y[i] = random(y[i - 1] - 40, y[i - 1] - 90);
+    }
+
+    platforms.add(new Platform(x[i], y[i], 50, 10));
+    if (i > numOfPlatforms - 5) keyParts.add(new KeyPart(x[i], y[i] - 25, 10, 10));
   }
+
+  //for (int i = 0; i < 5; i++)
+  //{
+  //  platforms.add(new Platform(width * i/5 + 100, height - 80, 50, 10));
+  //  if (i < 4) keyParts.add(new KeyPart(width * i/5 + 100, height - 110, 10, 10));
+  //}
+
   //platforms.add(new Platform(width/2, height - 80, 50, 10));
 }
 
