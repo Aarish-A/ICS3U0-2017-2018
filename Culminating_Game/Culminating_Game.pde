@@ -14,6 +14,11 @@ boolean leftPressed;
 boolean upPressed;
 boolean downPressed;
 
+PImage instructions_screen_1;
+PImage instructions_screen_2;
+PImage instructions_screen_3;
+PImage instructions_screen_4;
+
 Char c;
 Door d;
 ArrayList<Platform> platforms;
@@ -30,7 +35,7 @@ void setup()
 {
   frameRate(60);
 
-  screenNum = 4;
+  screenNum = 0;
   startTime = frameCount;
   numOfKeys = 0;
 
@@ -38,6 +43,11 @@ void setup()
   leftPressed = false;
   upPressed = false;
   downPressed = false;
+
+  instructions_screen_1 = loadImage("images/instructions_screen_1.png");
+  instructions_screen_2 = loadImage("images/instructions_screen_2.png");
+  instructions_screen_3 = loadImage("images/instructions_screen_3.png");
+  instructions_screen_4 = loadImage("images/instructions_screen_4.png");
 
   c = new Char(width/2, height, 10, 40);
   d = new Door(width * 4/5 + 100, height - 90, 30, 60);
@@ -56,24 +66,24 @@ void draw()
 {
   switch (screenNum)
   {
-    case 0:
-      instructOne();
-      break;
-    case 1:
-      instructTwo();
-      break;
-    case 2:
-      instructThree();
-      break;
-    case 3:
-      instructFour();
-      break;
-    case 4:
-      gameScreen();
-      break;
-    case 5:
-      endScreen();
-      break;
+  case 0:
+    instructOne();
+    break;
+  case 1:
+    instructTwo();
+    break;
+  case 2:
+    instructThree();
+    break;
+  case 3:
+    instructFour();
+    break;
+  case 4:
+    gameScreen();
+    break;
+  case 5:
+    endScreen();
+    break;
   }
 }
 
@@ -93,7 +103,7 @@ void keyPressed()
 
   if (keyCode == UP) upPressed = true;
   if (keyCode == DOWN) downPressed = true;
-  
+
   if (keyCode == ENTER && screenNum == 5) exit();
 }
 
