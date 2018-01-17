@@ -61,14 +61,14 @@ void setup()
   {
     if (i == 0)
     {
-      x[i] = random(50, 150);
+      x[i] = width / 2;
       y[i] = height - 100;
     } else 
     {
-      //if (i % 2 == 0) x[i] = random(x[0] - width / 2, x[0]);
-      //else x[i] = random(x[0], x[0] + width / 2);
+      if (i % 2 == 0) x[i] = random(x[0] - width / 2, x[0]);
+      else x[i] = random(x[0], x[0] + width / 2);
       
-      x[i] = random(x[i - 1] - 75, x[i - 1] + 250);
+      //x[i] = random(x[i - 1] - 75, x[i - 1] + 250);
       y[i] = random(y[i - 1] - 40, y[i - 1] - 90);
     }
 

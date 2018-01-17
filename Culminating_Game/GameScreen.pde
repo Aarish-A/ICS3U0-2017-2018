@@ -32,10 +32,10 @@ void gameScreen()
   //  p.update();
   //  p.checkPlayerCollision();
 
-  //  if (c.pos.x > p.pos.x - 20 && c.pos.x < p.pos.x + 20) p.size.y = 50;
-  //  else p.size.y = 5;
+  //  //if (c.pos.x > p.pos.x - 20 && c.pos.x < p.pos.x + 20) p.size.y = 50;
+  //  //else p.size.y = 5;
 
-  //  println(p.topLeftCorner, p.topRightCorner, ",");
+  //  //println(p.topLeftCorner, p.topRightCorner, ",");
   //}
 
   d.update();
@@ -51,9 +51,10 @@ void updateStats()
   gameTimer = (frameCount - startTime) / 60;
 
   textAlign(RIGHT);
+  textSize(20);
   fill(0);
-  text(gameTimer, width - 20, 20);
-  text(numOfKeys, width - 20, 40);
+  text(gameTimer, width - 20, 30);
+  text(numOfKeys + " / 4", width - 20, 60);
 }
 
 void checkGameTimer()
