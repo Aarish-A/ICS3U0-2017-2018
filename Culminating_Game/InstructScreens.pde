@@ -4,7 +4,7 @@ void instructOne()
   background(255);
   textAlign(CENTER, CENTER);
 
-  image(instructions_screen_1, 40, 0);
+  image(instructions_screen_1, 0, 0, width, height);
   instructionArrows();
 }
 
@@ -14,7 +14,7 @@ void instructTwo()
   background(255);
   textAlign(CENTER, CENTER);
 
-  image(instructions_screen_2, 40, 0);
+  image(instructions_screen_2, 0, 0, width, height);
   instructionArrows();
 }
 
@@ -24,7 +24,7 @@ void instructThree()
   background(255);
   textAlign(CENTER, CENTER);
 
-  image(instructions_screen_3, 40, 0);
+  image(instructions_screen_3, 0, 0, width, height);
   instructionArrows();
 }
 
@@ -34,7 +34,7 @@ void instructFour()
   background(255);
   textAlign(CENTER, CENTER);
 
-  image(instructions_screen_4, 40, 0);
+  image(instructions_screen_4, 0, 0, width, height);
   instructionArrows();
 }
 
@@ -52,7 +52,13 @@ void instructionArrows()
 
   rectMode(CENTER);
   if (screenNum == 3)
+  {
+    fill(255);
     rect(width / 2, height - 50, 50, 50);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("START", width / 2, height - 50);
+  }
 }
 
 //Function increments or decrements the screen count based on how far the mouse button
@@ -61,5 +67,5 @@ void mousePressed()
 {
   if (dist(mouseX, mouseY, width - 75, height - 50) < 50 && screenNum < 3) screenNum ++;
   else if (dist(mouseX, mouseY, 75, height - 50) < 50 && screenNum > 0) screenNum --;
-  else if (dist(mouseX, mouseY, width / 2, height - 50) < 50 && screenNum == 3) screenNum ++;
+  else if (dist(mouseX, mouseY, width / 2, height - 50) < 50 && screenNum == 3) screenNum ++; startTime = frameCount;
 }
