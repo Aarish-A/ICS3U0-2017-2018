@@ -70,7 +70,7 @@ class Char
     //jumping while in the air)
     if (upPressed && grounded)
     {
-      accel.y = -1.3;
+      accel.y = -1.6;
       grounded = false;
     }
 

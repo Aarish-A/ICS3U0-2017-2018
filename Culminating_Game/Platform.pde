@@ -41,11 +41,12 @@ class Platform
   {
     if (abs(c.bottomLeftCorner.x - topLeftCorner.x) < size.x && 
       abs(c.bottomRightCorner.x - topRightCorner.x) < size.x && 
-      abs(c.pos.y - (pos.y - size.y)) < 3 && c.vel.y > 0 && !downPressed)
+      abs(c.pos.y - (pos.y - size.y)) < 15 && c.vel.y > 0 && !downPressed)
     {
       c.pos.y = pos.y - size.y;
       c.grounded = true;
-      println("yeet");
+      c.update();
+      c.checkMovement();
     } else if (c.pos.y < height)
     {
       c.grounded = false;

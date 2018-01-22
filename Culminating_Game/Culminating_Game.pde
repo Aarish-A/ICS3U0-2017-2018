@@ -31,7 +31,8 @@ ArrayList<KeyPart> keyParts;
 
 void settings()
 {
-  size(1000, 600);
+  //size(1000, 600);
+  fullScreen();
 }
 
 void setup()
@@ -58,7 +59,6 @@ void setup()
   numOfPlatforms = 10;
 
   c = new Char(width/2, height, 10, 40);
-  d = new Door(width * 4/5 + 100, height - 90, 30, 60);
   platforms = new ArrayList<Platform>();
   keyParts = new ArrayList<KeyPart>();
 
@@ -74,19 +74,17 @@ void setup()
   {
     if (i == 0)
     {
-      x[i] = width / 2;
-      y[i] = height - 100;
+      x[i] = 150;
+      y[i] = height - 200;
     } else 
-    {
-      if (i % 2 == 0) x[i] = random(x[0] - width / 2, x[0]);
-      else x[i] = random(x[0], x[0] + width / 2);
-      
-      //x[i] = random(x[i - 1] - 75, x[i - 1] + 250);
-      y[i] = random(y[i - 1] - 40, y[i - 1] - 90);
+    {      
+      x[i] = random(x[i - 1] + 75, x[i - 1] + 200);
+      y[i] = random(y[i - 1] - 80, y[i - 1] - 150);
     }
 
     platforms.add(new Platform(x[i], y[i], 50, 10));
-    if (i > numOfPlatforms - 5) keyParts.add(new KeyPart(x[i], y[i] - 25, 10, 10));
+    if (i > numOfPlatforms - 6 && i < numOfPlatforms - 1) keyParts.add(new KeyPart(x[i], y[i] - 25, 10, 10));
+    if (i == numOfPlatforms - 1)   d = new Door(x[i], y[i] - 10, 30, 60);
   }
 
   //for (int i = 0; i < 5; i++)
