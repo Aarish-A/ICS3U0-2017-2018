@@ -40,7 +40,7 @@ void setup()
   frameRate(60);
 
   //GLOBAL VARIABLES
-  screenNum = 4;
+  screenNum = 0;
   startTime = frameCount;
 
   rightPressed = false; // A key held down is registered as multiple presses using the 

@@ -58,13 +58,13 @@ void updateStats()
   textAlign(RIGHT);
   textSize(20);
   fill(0);
-  text(gameTimer, width - 20, 30);
-  text(numOfKeys + " / 4", width - 20, 60);
+  text(round(gameTimer) + " seconds", width - 20, 30);
+  text(numOfKeys + " / 4 key parts", width - 20, 60);
 }
 
 //Constantly checks for if the game timer has reached more than  
 //60 seconds in which the game ends
 void checkGameTimer()
 {
-  if (gameTimer >= 60) screenNum ++;
+  if (gameTimer >= 30) screenNum ++;
 }

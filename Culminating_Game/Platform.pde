@@ -28,7 +28,7 @@ class Platform
   //Updates and draws the platform object
   void update()
   {
-    fill(255);
+    fill(0);
     rectMode(CORNERS);
     rect(pos.x - size.x/2, pos.y - size.y, pos.x + size.x/2, pos.y);
   }
